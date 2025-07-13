@@ -30,7 +30,6 @@
                         <tr>
                             <th>Id</th>
                             <th>Categoría</th>
-                            <th>Tipo Categoría</th>
                             <th>Editar</th>
                             <th>Eliminar</th>
                         </tr>
@@ -40,7 +39,6 @@
                             <tr>
                                 <td>{{ $categoria->id }}</td>
                                 <td>{{ $categoria->name_category }}</td>
-                                <td>{{ $categoria->tipe_category }}</td>
                                 <td>
                                     <a href="{{ route('categorias.edit', ['categorias_edit' => $categoria->id]) }}"
                                         class="btn btn-sm btn-outline-primary rounded-circle">

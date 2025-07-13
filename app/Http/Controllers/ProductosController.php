@@ -44,6 +44,7 @@ class ProductosController extends Controller
             'nameProduct' => 'required',
             'nameCategoria' => 'required',
             'stock' => 'required',
+            'presentation' => 'required',
             'description' => 'required',
             'brand' => 'required',
             'supplier' => 'required',
@@ -55,6 +56,7 @@ class ProductosController extends Controller
         $productos->name_product = $request->nameProduct;
         $productos->name_categoria = $request->nameCategoria;
         $productos->stock = $request->stock;
+        $productos->presentation = $request->presentation;
         $productos->description = $request->description;
         $productos->brand = $request->brand;
         $productos->supplier = $request->supplier;
@@ -71,6 +73,7 @@ class ProductosController extends Controller
             'nameProduct' => 'required',
             'nameCategoria' => 'required',
             'stock' => 'required',
+            'presentation' => 'required',
             'description' => 'required',
             'brand' => 'required',
             'supplier' => 'required',
@@ -78,16 +81,17 @@ class ProductosController extends Controller
             'precio_venta' => 'required|numeric'
         ]);
 
-        $productos_edit = Productos::findOrFail($productos_id);
-        $productos_edit->name_product = $request->nameProduct;
-        $productos_edit->name_categoria = $request->nameCategoria;
-        $productos_edit->stock = $request->stock;
-        $productos_edit->description = $request->description;
-        $productos_edit->brand = $request->brand;
-        $productos_edit->supplier = $request->supplier;
-        $productos_edit->precio_compra = $request->precio_compra;
-        $productos_edit->precio_venta = $request->precio_venta;
-        $productos_edit->save();
+        $productos = new Productos();
+        $productos->name_product = $request->nameProduct;
+        $productos->name_categoria = $request->nameCategoria;
+        $productos->stock = $request->stock;
+        $productos->presentation = $request->presentation;
+        $productos->description = $request->description;
+        $productos->brand = $request->brand;
+        $productos->supplier = $request->supplier;
+        $productos->precio_compra = $request->precio_compra;
+        $productos->precio_venta = $request->precio_venta;
+        $productos->save();
 
         return redirect()->route('productos.index');
     }
@@ -103,11 +107,4 @@ class ProductosController extends Controller
         $productos_eliminar->delete();
         return redirect()->route('productos.index');
     }
-
-    // public function destroy(Request $request)
-    // {
-    //     $productos_eliminar->delete();
-    //     return redirect()->route('producto.index');
-    // }
-
 }

@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorias;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redis;
-use SebastianBergmann\CodeUnit\FunctionUnit;
+
 
 class CategoriasController extends Controller
 {
@@ -28,26 +27,23 @@ class CategoriasController extends Controller
 
         if ($searchTerm) {
             $categorias_buscar->where(function ($query) use ($searchTerm) {
-                $query->where('name_category', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('tipe_category', 'LIKE', '%' . $searchTerm . '%');
+                $query->where('name_category', 'LIKE', '%' . $searchTerm . '%');
             });
         }
 
-        $categorias_buscar = $categorias_buscar->paginate(5); 
+        $categorias_buscar = $categorias_buscar->paginate(5);
 
-        return view('categorias.categoriasSearch', compact('categorias_buscar')); 
+        return view('categorias.categoriasSearch', compact('categorias_buscar'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'nameCategory' => 'required',
-            'tipeCategory' => 'required'
         ]);
 
         $categorias = new Categorias();
         $categorias->name_category = $request->nameCategory;
-        $categorias->tipe_category = $request->tipeCategory;
         $categorias->save();
 
         return redirect()->route('categorias.index');
@@ -63,13 +59,11 @@ class CategoriasController extends Controller
     public function update(Request $request, $categorias_id)
     {
         $request->validate([
-            'nameCategory' => 'required',
-            'tipeCategory' => 'required'
+            'nameCategory' => 'required'
         ]);
 
         $categorias_edit = Categorias::findOrFail($categorias_id);
         $categorias_edit->name_category = $request->nameCategory;
-        $categorias_edit->tipe_category = $request->tipeCategory;
         $categorias_edit->save();
 
         return redirect()->route("categorias.index");
