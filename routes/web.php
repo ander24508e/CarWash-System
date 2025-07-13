@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/editar-productos/{productos_edit}', [ProductosController::class, 'edit'])->name('productos.edit');
     Route::get('/buscar-productos', [ProductosController::class, 'search'])->name('productos.buscar');
     Route::post('/agregar-productos', [ProductosController::class, 'store'])->name('productos.store');    
-    Route::put('/actualizar-productos/{prodcutos_id}', [ProductosController::class, 'update'])->name('productos.update');
+    Route::put('/actualizar-productos/{productos_id}', [ProductosController::class, 'update'])->name('productos.update');
     Route::delete('/eliminar-categorias/{productos_eliminar}', [ProductosController::class, 'destroyer'])->name('productos.delete');
 
 

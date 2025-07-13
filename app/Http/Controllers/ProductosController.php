@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorias;
 use App\Models\Productos;
-
 use Illuminate\Http\Request;
 
 class ProductosController extends Controller
@@ -81,7 +80,7 @@ class ProductosController extends Controller
             'precio_venta' => 'required|numeric'
         ]);
 
-        $productos = new Productos();
+        $productos = Productos::findOrFail($productos_id);
         $productos->name_product = $request->nameProduct;
         $productos->name_categoria = $request->nameCategoria;
         $productos->stock = $request->stock;
@@ -99,7 +98,8 @@ class ProductosController extends Controller
     public function edit(Request $request, int $productos_edit)
     {
         $productos = Productos::findOrFail($productos_edit);
-        return view('productos.productosEdit', compact('productos'));
+        $categorias = Categorias::all();
+        return view('productos.productosEdit', compact('productos', 'categorias'));
     }
 
     public function destroyer(Productos $productos_eliminar)

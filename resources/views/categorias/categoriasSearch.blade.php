@@ -1,5 +1,6 @@
 @extends('menu')
 @section('contenido')
+
 @vite(['resources/scss/Categorias/categoriaStyles.scss'])
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
