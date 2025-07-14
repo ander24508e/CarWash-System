@@ -8,7 +8,7 @@ class ClientesController extends Controller
 {
     public function index()
     {
-        // $servicios = Productos::orderBy('name_provincia', 'asc')->paginate(5);
+        // $clientes = Clientes::orderBy('name_provincia', 'asc')->paginate(5);
         return view("clientes.clientes")->with([
             "clientes"
         ]);

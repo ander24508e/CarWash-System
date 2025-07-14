@@ -120,7 +120,7 @@
                 <script>
                     document.getElementById('precio_compra').addEventListener('input', function() {
                         const precioCompra = parseFloat(this.value) || 0;
-                        const iva = 0.30; // 12%
+                        const iva = 0.30; // 30%
                         const precioVenta = precioCompra * (1 + iva);
 
                         document.getElementById('precio_venta').value = precioVenta.toFixed(2);
