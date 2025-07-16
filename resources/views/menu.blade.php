@@ -15,10 +15,27 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="menu">
                 <img src="{{ asset('Images/lavadora-logo.jpg') }}" class="logo">
+                <ul class="navbar-nav me-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-box-seam me-2"></i>Productos
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/productos"><i class="bi bi-list-check me-2"></i>Ver
+                                        Productos</a></li>
+                                <li><a class="dropdown-item" href="/agregar-productos"><i
+                                            class="bi bi-plus-circle me-2"></i>Agregar Productos</a></li>
+                            </ul>
+                        </li>
+                </ul>
+
             </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+
 
             {{-- Menu Lateral con opciones --}}
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">

@@ -17,7 +17,7 @@ class VehiculosController extends Controller
 
     public function create()
     {
-        $vehiculos = vehiculos::all();
+        $clientes = Clientes::all();
         return view('vehiculos.vehiculosCreate', compact('clientes'));
     }
 
@@ -29,9 +29,10 @@ class VehiculosController extends Controller
 
         if ($searchTerm) {
             $vehiculos_buscar->where(function ($query) use ($searchTerm) {
-                $query->where('numberPlaca', 'LIKE', '%' . $searchTerm . '%');
-                $query->where('nameCustomer', 'LIKE', '%' . $searchTerm . '%');
-                $query->where('modelVehicle', 'LIKE', '%' . $searchTerm . '%');
+                $query->where('placa', 'LIKE', '%' . $searchTerm . '%');
+                $query->where('customer', 'LIKE', '%' . $searchTerm . '%');
+                $query->where('brand_vehicle', 'LIKE', '%' . $searchTerm . '%');
+                $query->where('model_vehicle', 'LIKE', '%' . $searchTerm . '%');
             });
         }
 
@@ -82,16 +83,16 @@ class VehiculosController extends Controller
         return redirect()->route('vehiculos.index');
     }
 
-    public function edit(Request $request, int $productos_edit)
+    public function edit(Request $request, int $vehiculos_edit)
     {
-        $productos = vehiculos::findOrFail($productos_edit);
-        $categorias = Clientes::all();
+        $vehiculos = vehiculos::findOrFail($vehiculos_edit);
+        $clientes = Clientes::all();
         return view('vehiculos.vehiculosEdit', compact('vehiculos', 'clientes'));
     }
 
     public function destroyer(vehiculos $vehiculos_eliminar)
     {
         $vehiculos_eliminar->delete();
-        return redirect()->route('productos.index');
+        return redirect()->route('vehiculos.index');
     }
 }

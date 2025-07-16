@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
-    <form class="d-flex buscar" action="{{ route('categorias.buscar') }}" method="GET">
+    <form class="d-flex buscar" action="{{ route('vehiculos.buscar') }}" method="GET">
         @csrf
         <input class="form-control me-2" type="search" placeholder="Buscar Vehiculos" name="searchTerm"
             value="{{ request()->searchTerm }}">
@@ -19,7 +19,7 @@
     </a>
 
     <div class="container py-4">
-        <!-- Tabla de categorías -->
+        <!-- Tabla de vehículos -->
         <div class="card shadow">
             <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Vehiculos</h5>
@@ -43,18 +43,19 @@
                             <tr>
                                 <td>{{ $vehiculo->id }}</td>
                                 <td>{{ $vehiculo->placa }}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ $vehiculo->customer }}</td>
+                                <td>{{ $vehiculo->brand_vehicle }}</td>
+                                <td>{{ $vehiculo->model_vehicle}}</td>
+                                <td>{{ $vehiculo->color }}</td>
                                 <td>
-                                    <a href="{{ route('categorias.edit', ['categorias_edit' => $categoria->id]) }}"
+                                    <a href="{{ route('vehiculos.edit', ['vehiculos_edit' => $vehiculo->id]) }}"
                                         class="btn btn-sm btn-outline-primary rounded-circle">
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                 </td>
                                 <td>
                                     <form method="POST"
-                                        action="{{ route('categorias.delete', ['categorias_eliminar' => $categoria->id]) }}">
+                                        action="{{ route('vehiculos.delete', ['vehiculos_eliminar' => $vehiculo->id]) }}">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle">
