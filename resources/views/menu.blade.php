@@ -13,53 +13,42 @@
 <body>
     <nav class="navbar bg-body-tertiary fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="menu">
-                <img src="{{ asset('Images/lavadora-logo.jpg') }}" class="logo">
-                <ul class="navbar-nav me-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-box-seam me-2"></i>Productos
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/productos"><i class="bi bi-list-check me-2"></i>Ver
-                                        Productos</a></li>
-                                <li><a class="dropdown-item" href="/agregar-productos"><i
-                                            class="bi bi-plus-circle me-2"></i>Agregar Productos</a></li>
-                            </ul>
-                        </li>
+            <div class="d-flex align-items-center">
+                <!-- Logo y menú Productos en línea -->
+                <a class="navbar-brand me-3" href="menu">
+                    <img src="{{ asset('Images/lavadora-logo.jpg') }}" class="logo">
+                </a>
+
+                <!-- Menú de Productos alineado con el logo -->
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="bi bi-box-seam me-2"></i>Servicios
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="/servicios"><i class="bi bi-list-check me-2"></i>Ver
+                                    Servicios</a></li>
+                        </ul>
+                    </li>
                 </ul>
 
-            </a>
+                <!-- Menú de Productos alineado con el logo -->
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="bi bi-box-seam me-2"></i>Vehiculos
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="/vehiculos"><i class="bi bi-list-check me-2"></i>Ver
+                                    Vehiculos</a></li>
+                        </ul>
+                    </li>
+                </ul>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-
-
-            {{-- Menu Lateral con opciones --}}
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
-                <div class="offcanvas-header">
-                    <a class="navbar-brand" href="/profile">
-                        <img src="{{ asset('Images/lavadora-logo.jpg') }}" class="logo">
-                    </a>
-                    <h5 class="mb-0">Anderson</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
+                @auth
                     <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-box-seam me-2"></i>Productos
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/productos"><i class="bi bi-list-check me-2"></i>Ver
-                                        Productos</a></li>
-                                <li><a class="dropdown-item" href="/agregar-productos"><i
-                                            class="bi bi-plus-circle me-2"></i>Agregar Productos</a></li>
-                            </ul>
-                        </li>
-
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
                                 <i class="bi bi-people me-2"></i>Clientes
@@ -71,88 +60,96 @@
                                             class="bi bi-plus-circle me-2"></i>Agregar Clientes</a></li>
                             </ul>
                         </li>
+                    </ul>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-tags me-2"></i>Categorias
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-cash-stack me-2"></i>Ventas
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/ventas"><i class="bi bi-list-check me-2"></i>Ver
+                                            Ventas</a></li>
+                                    <li><a class="dropdown-item" href="/agregar-ventas"><i
+                                                class="bi bi-plus-circle me-2"></i>Agregar Venta</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    @endauth
+            </div>
+
+            {{-- @if (Auth::user()->hasRole('admin')) --}}
+            @auth
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
+                    <div class="offcanvas-header">
+                        <a class="navbar-brand">
+                            <img src="{{ asset('Images/lavadora-logo.jpg') }}" class="logo">
+                        </a>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-box-seam me-2"></i>Productos
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/productos"><i class="bi bi-list-check me-2"></i>Ver
+                                            Productos</a></li>
+                                    <li><a class="dropdown-item" href="/ver-categorias"><i
+                                                class="bi bi-list-check me-2"></i>Ver
+                                            Categorias</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-receipt me-2"></i>Facturas
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/facturas"><i
+                                                class="bi bi-list-check me-2"></i>Ver
+                                            Facturas</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-person-lines-fill me-2"></i>Empleados
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/usuarios"><i
+                                                class="bi bi-list-check me-2"></i>Ver Empleados</a></li>
+                                </ul>
+                            </li>
+                            {{-- @endif --}}
+                        </ul>
+
+                    </div>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/profile">
+                                <i class="bi bi-person-lines-fill me-2"></i>Configuración
                             </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/ver-categorias"><i class="bi bi-list-check me-2"></i>Ver
-                                        Categorias</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-cash-stack me-2"></i>Ventas
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/ventas"><i class="bi bi-list-check me-2"></i>Ver
-                                        Ventas</a></li>
-                                <li><a class="dropdown-item" href="/agregar-ventas"><i
-                                            class="bi bi-plus-circle me-2"></i>Agregar Venta</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-receipt me-2"></i>Facturas
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/facturas"><i class="bi bi-list-check me-2"></i>Ver
-                                        Facturas</a></li>
-                                <li><a class="dropdown-item" href="/agregar-facturas"><i
-                                            class="bi bi-plus-circle me-2"></i>Agregar Facturas</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-tools me-2"></i>Servicios
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/servicios"><i class="bi bi-list-check me-2"></i>Ver
-                                        Servicios</a></li>
-                                <li><a class="dropdown-item" href="/agregar-servicios"><i
-                                            class="bi bi-plus-circle me-2"></i>Agregar Servicio</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-truck me-2"></i>Vehículos
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/vehiculos"><i
-                                            class="bi bi-list-check me-2"></i>Ver Vehiculos</a></li>
-                                <li><a class="dropdown-item" href="/agregar-vehiculos"><i
-                                            class="bi bi-plus-circle me-2"></i>Agregar Vehiculo</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-person-lines-fill me-2"></i>Usuarios
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/usuarios"><i
-                                            class="bi bi-list-check me-2"></i>Ver Usuarios</a></li>
-                                <li><a class="dropdown-item" href="/empleados"><i
-                                            class="bi bi-list-check me-2"></i>Ver Empleados</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item logout mt-4 pt-3 border-top">
-                            <form method="POST" action="{{ route('logout') }}" class="w-100">
-                                @csrf
-                                <button type="submit" class="btn btn-outline-danger w-100">
-                                    <i class="bi bi-box-arrow-left me-2"></i>Cerrar Sesión
-                                </button>
-                            </form>
                         </li>
                     </ul>
+
+                    <div class="logout-footer">
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-danger">
+                                <i class="bi bi-box-arrow-left me-2"></i>Cerrar Sesión
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </div>
+
+            @endauth
         </div>
     </nav>
 

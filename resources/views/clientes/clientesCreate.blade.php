@@ -68,7 +68,7 @@
 
 
                 <div class="mb-3 row">
-                    <label for="phone" class="col-sm-2 col-form-label">Cédula:</label>
+                    <label for="phone" class="col-sm-2 col-form-label">Telefono:</label>
                     <div class="col-sm-4">
                         <input type="text"
                             class="form-control"
@@ -88,7 +88,7 @@
 
                 <div class="card-footer text-muted">
                     <button type="submit" class="btn btn-dark">AGREGAR</button>
-                    <a href="{{ route('categorias.index') }}" class="btn btn-dark" style="margin-left: 10px;">VOLVER</a>
+                    <a href="{{ route('clientes.index') }}" class="btn btn-dark" style="margin-left: 10px;">VOLVER</a>
                 </div>
             </form>
         </div>
