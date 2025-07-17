@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('facturas', function (Blueprint $table) {
             $table->id();
-            $table->string('customer');
-            $table->string('identification');
+            $table->foreignId('customer')->constrained('clientes', 'id');
+            $table->string('identification')->constrained('clientes', 'identification');
             $table->string('date');
             $table->string('address');
             $table->string('discount');
             $table->string('description'); //producto o servicio
-            $table->string('prrecio_subtotal');
-            $table->string('prrecio_total');
+            $table->string('precio_subtotal');
+            $table->string('precio_total');
             $table->timestamps();
         });
     }

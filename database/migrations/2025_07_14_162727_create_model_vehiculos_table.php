@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('model_vehiculos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('name_model');
+            $table->foreignId('brand')->constrained('marca_vehiculos'); // Nombre exacto de la tabla
         });
     }
 

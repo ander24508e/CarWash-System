@@ -20,7 +20,7 @@
                             <select id="nameCustomer" name="nameCustomer" class="form-control">
                                 @foreach ($clientes as $cliente)
                                     <option value="{{ $cliente->id }}">
-                                        {{ $cliente->lastname_customer }}
+                                        {{ $cliente->name_customer }}
                                     </option>
                                 @endforeach
                             </select>
@@ -73,7 +73,7 @@
 
                     <div class="card-footer text-muted">
                         <button type="submit" class="btn btn-dark">AGREGAR</button>
-                        <a href="{{ route('categorias.index') }}" class="btn btn-dark"
+                        <a href="{{ route('vehiculos.index') }}" class="btn btn-dark"
                             style="margin-left: 10px;">VOLVER</a>
                     </div>
                 </form>

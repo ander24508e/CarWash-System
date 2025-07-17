@@ -23,13 +23,13 @@ class ClientesController extends Controller
     {
         $searchTerm = $request->input('searchTerm');
 
-        $clientes_buscar = clientes::query();
+        $clientes_buscar = Clientes::query();
 
         if ($searchTerm) {
             $clientes_buscar->where(function ($query) use ($searchTerm) {
-                $query->where('numberPlaca', 'LIKE', '%' . $searchTerm . '%');
-                $query->where('nameCustomer', 'LIKE', '%' . $searchTerm . '%');
-                $query->where('modelVehicle', 'LIKE', '%' . $searchTerm . '%');
+                $query->where('name_customer', 'LIKE', '%' . $searchTerm . '%');
+                $query->where('lastname_customer', 'LIKE', '%' . $searchTerm . '%');
+                $query->where('identification', 'LIKE', '%' . $searchTerm . '%');
             });
         }
 
@@ -44,7 +44,8 @@ class ClientesController extends Controller
             'lastnameCustomer' => 'required',
             'identification' => 'required',
             'email' => 'required',
-            'phone' => 'required'
+            'phone' => 'required',
+            'address' => 'required'
         ]);
 
         $clientes = new Clientes();
@@ -53,6 +54,7 @@ class ClientesController extends Controller
         $clientes->identification = $request->identification;
         $clientes->email = $request->email;
         $clientes->phone = $request->phone;
+        $clientes->address = $request->address;
         $clientes->save();
 
         return redirect()->route('clientes.index');
@@ -66,7 +68,8 @@ class ClientesController extends Controller
             'lastnameCustomer' => 'required',
             'identification' => 'required',
             'email' => 'required',
-            'phone' => 'required'
+            'phone' => 'required',
+            'address' => 'required'
         ]);
 
         $clientes = Clientes::findOrFail($clientes_id);
@@ -75,6 +78,7 @@ class ClientesController extends Controller
         $clientes->identification = $request->identification;
         $clientes->email = $request->email;
         $clientes->phone = $request->phone;
+        $clientes->address = $request->address; 
         $clientes->save();
 
         return redirect()->route('clientes.index');
@@ -91,7 +95,4 @@ class ClientesController extends Controller
         $clientes_eliminar->delete();
         return redirect()->route('clientes.index');
     }
-
-
-
 }

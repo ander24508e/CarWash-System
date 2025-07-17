@@ -86,6 +86,17 @@
                     </div>
                 </div>
 
+                <div class="mb-3 row">
+                    <label for="address" class="col-sm-2 col-form-label">Dirección:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="address" name="address"
+                            value="{{ old('address', $clientes->address ?? '') }}">
+                    </div>
+                    @error('address')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
                 <div class="card-footer text-muted">
                     <button type="submit" class="btn btn-dark">AGREGAR</button>
                     <a href="{{ route('clientes.index') }}" class="btn btn-dark" style="margin-left: 10px;">VOLVER</a>

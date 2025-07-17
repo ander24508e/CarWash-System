@@ -73,11 +73,11 @@ class VehiculosController extends Controller
         ]);
 
         $vehiculos = vehiculos::findOrFail($vehiculos_id);
-        $vehiculos->placa = $request->nameProduct;
-        $vehiculos->customer = $request->nameCategoria;
-        $vehiculos->brand_vehicle = $request->stock;
-        $vehiculos->model_vehicle = $request->presentation;
-        $vehiculos->color = $request->description;
+        $vehiculos->placa = $request->numberPlaca;
+        $vehiculos->customer = $request->nameCustomer;
+        $vehiculos->brand_vehicle = $request->brandVehicle;
+        $vehiculos->model_vehicle = $request->modelVehicle;
+        $vehiculos->color = $request->color;
         $vehiculos->save();
 
         return redirect()->route('vehiculos.index');

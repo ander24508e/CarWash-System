@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('identification');
             $table->string('email');
             $table->string('phone');
+            $table->string('address');
         });
     }
 
