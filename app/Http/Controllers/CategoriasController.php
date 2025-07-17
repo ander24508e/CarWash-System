@@ -11,12 +11,12 @@ class CategoriasController extends Controller
     public function index()
     {
         $categorias = Categorias::orderBy('id', 'asc')->paginate(5);
-        return view("categorias.categorias", compact('categorias'));
+        return view("inventario.categorias.categorias", compact('categorias'));
     }
 
     public function create()
     {
-        return view('categorias.categoriasCreate');
+        return view('inventario.categorias.categoriasCreate');
     }
 
     public function search(Request $request)
@@ -33,7 +33,7 @@ class CategoriasController extends Controller
 
         $categorias_buscar = $categorias_buscar->paginate(5);
 
-        return view('categorias.categoriasSearch', compact('categorias_buscar'));
+        return view('inventario.categorias.categoriasSearch', compact('categorias_buscar'));
     }
 
     public function store(Request $request)
@@ -52,7 +52,7 @@ class CategoriasController extends Controller
     public function edit(Request $request, int $categorias_edit)
     {
         $categorias = Categorias::findOrFail($categorias_edit);
-        return view('categorias.categoriasEdit', compact('categorias'));
+        return view('inventario.categorias.categoriasEdit', compact('categorias'));
     }
 
 

@@ -17,8 +17,12 @@
                 <div class="mb-3 row">
                     <label for="categoria" class="col-sm-2 col-form-label">Categoria:</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="categoria" name="nameCategory"
-                            value="{{ old('nameCategory', $categorias->nameCategory ?? '') }}">
+                        <input type="text" class="form-control" id="categoria" name="nameCategory">
+                    </div>
+                                        <div class="col-sm-4">
+                        <div class="alert alert-info p-2 mb-0">
+                            <small>Valor actual: <strong>{{ $categorias->name_category ?? 'N/A' }}</strong></small>
+                        </div>
                     </div>
                     @error('nameCategory')
                     <span class="text-danger">{{ $message }}</span>

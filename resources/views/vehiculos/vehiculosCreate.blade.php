@@ -31,7 +31,7 @@
                         <label for="placa" class="col-sm-2 col-form-label">Placa del Vehiculo:</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" id="placa" name="numberPlaca"
-                                value="{{ old('numberPlaca', $categorias->numberPlaca ?? '') }}">
+                                value="{{ old('numberPlaca', $vehiculos->numberPlaca ?? '') }}">
                         </div>
                         @error('numberPlaca')
                             <span class="text-danger">{{ $message }}</span>
@@ -42,7 +42,7 @@
                         <label for="brand" class="col-sm-2 col-form-label">Marca del Vehiculo:</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" id="brand" name="brandVehicle"
-                                value="{{ old('brandVehicle', $categorias->brandVehicle ?? '') }}">
+                                value="{{ old('brandVehicle', $vehiculos->brandVehicle ?? '') }}">
                         </div>
                         @error('brandVehicle')
                             <span class="text-danger">{{ $message }}</span>
@@ -53,7 +53,7 @@
                         <label for="model" class="col-sm-2 col-form-label">Modelo del Vehiculo:</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" id="model" name="modelVehicle"
-                                value="{{ old('modelVehicle', $categorias->modelVehicle ?? '') }}">
+                                value="{{ old('modelVehicle', $vehiculos->modelVehicle ?? '') }}">
                         </div>
                         @error('modelVehicle')
                             <span class="text-danger">{{ $message }}</span>
@@ -64,7 +64,7 @@
                         <label for="color" class="col-sm-2 col-form-label">Color del Vehiculo:</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" id="color" name="color"
-                                value="{{ old('color', $categorias->color ?? '') }}">
+                                value="{{ old('color', $vehiculos->color ?? '') }}">
                         </div>
                         @error('color')
                             <span class="text-danger">{{ $message }}</span>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clientes;
-use App\Models\vehiculos;
 use Illuminate\Http\Request;
 
 class ClientesController extends Controller
@@ -87,10 +86,10 @@ class ClientesController extends Controller
     public function edit(Request $request, int $clientes_edit)
     {
         $clientes = Clientes::findOrFail($clientes_edit);
-        return view('clientes.clientesEdit');
+        return view('clientes.clientesEdit', compact('clientes'));
     }
 
-    public function destroyer(vehiculos $clientes_eliminar)
+    public function destroyer(Clientes $clientes_eliminar)
     {
         $clientes_eliminar->delete();
         return redirect()->route('clientes.index');

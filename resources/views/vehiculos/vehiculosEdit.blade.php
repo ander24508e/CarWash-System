@@ -1,10 +1,10 @@
 @extends('menu')
 @section('contenido')
-    @vite(['resources/scss/allStyles.scss'])
+@vite(['resources/scss/allStyles.scss'])
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
 <div class="container">
     <div class="card text-center">
@@ -15,7 +15,7 @@
             <form method="post" action="{{ route('vehiculos.update', ['vehiculos_id' => $vehiculos->id]) }}">
                 @csrf
                 @method('PUT')
-
+                
                 <div class="mb-3 row">
                     <label for="nameCustomer" class="col-sm-2 col-form-label">Propietario</label>
                     <div class="col-sm-4">
@@ -32,8 +32,12 @@
                 <div class="mb-3 row">
                     <label for="placa" class="col-sm-2 col-form-label">Placa del Vehiculo:</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="placa" name="numberPlaca"
-                            value="{{ old('numberPlaca', $categorias->numberPlaca ?? '') }}">
+                        <input type="text" class="form-control" id="placa" name="numberPlaca">
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="alert alert-info p-2 mb-0">
+                            <small>Valor actual: <strong>{{ $vehiculos->placa ?? 'N/A' }}</strong></small>
+                        </div>
                     </div>
                     @error('numberPlaca')
                     <span class="text-danger">{{ $message }}</span>
@@ -43,8 +47,12 @@
                 <div class="mb-3 row">
                     <label for="brand" class="col-sm-2 col-form-label">Marca del Vehiculo:</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="brand" name="brandVehicle"
-                            value="{{ old('brandVehicle', $categorias->brandVehicle ?? '') }}">
+                        <input type="text" class="form-control" id="brand" name="brandVehicle">
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="alert alert-info p-2 mb-0">
+                            <small>Valor actual: <strong>{{ $vehiculos->brand_vehicle ?? 'N/A' }}</strong></small>
+                        </div>
                     </div>
                     @error('brandVehicle')
                     <span class="text-danger">{{ $message }}</span>
@@ -54,8 +62,12 @@
                 <div class="mb-3 row">
                     <label for="model" class="col-sm-2 col-form-label">Modelo del Vehiculo:</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="model" name="modelVehicle"
-                            value="{{ old('modelVehicle', $categorias->modelVehicle ?? '') }}">
+                        <input type="text" class="form-control" id="model" name="modelVehicle">
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="alert alert-info p-2 mb-0">
+                            <small>Valor actual: <strong>{{ $vehiculos->model_vehicle ?? 'N/A' }}</strong></small>
+                        </div>
                     </div>
                     @error('modelVehicle')
                     <span class="text-danger">{{ $message }}</span>
@@ -65,8 +77,12 @@
                 <div class="mb-3 row">
                     <label for="color" class="col-sm-2 col-form-label">Color del Vehiculo:</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="color" name="color"
-                            value="{{ old('color', $categorias->color ?? '') }}">
+                        <input type="text" class="form-control" id="color" name="color">
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="alert alert-info p-2 mb-0">
+                            <small>Valor actual: <strong>{{ $vehiculos->color ?? 'N/A' }}</strong></small>
+                        </div>
                     </div>
                     @error('color')
                     <span class="text-danger">{{ $message }}</span>

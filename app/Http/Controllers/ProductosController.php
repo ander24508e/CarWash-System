@@ -11,13 +11,13 @@ class ProductosController extends Controller
     public function index()
     {
         $productos = Productos::orderBy('id', 'asc')->paginate(5);
-        return view("productos.productos", compact('productos'));
+        return view("inventario.productos.productos", compact('productos'));
     }
 
     public function create()
     {
         $categorias = Categorias::all();
-        return view('productos.productosCreate', compact('categorias'));
+        return view('inventario.productos.productosCreate', compact('categorias'));
     }
 
     public function search(Request $request)
@@ -34,7 +34,7 @@ class ProductosController extends Controller
 
         $productos_buscar = $productos_buscar->paginate(5);
 
-        return view('productos.productosSearch', compact('productos_buscar'));
+        return view('inventario.productos.productosSearch', compact('productos_buscar'));
     }
 
     public function store(Request $request)
@@ -99,7 +99,7 @@ class ProductosController extends Controller
     {
         $productos = Productos::findOrFail($productos_edit);
         $categorias = Categorias::all();
-        return view('productos.productosEdit', compact('productos', 'categorias'));
+        return view('inventario.productos.productosEdit', compact('productos', 'categorias'));
     }
 
     public function destroyer(Productos $productos_eliminar)
