@@ -40,9 +40,10 @@ class ModelVehiculoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name_model' => 'required',
-            'brand' => 'required'
+            'nameModel' => 'required',
+            'nameMarca' => 'required'
         ]);
+        // dd($request);
 
         $modelos = new ModelVehiculo();
         $modelos->name_model = $request->nameModel;
@@ -52,27 +53,29 @@ class ModelVehiculoController extends Controller
         return redirect()->route('modelos.index');
     }
 
-    public function edit(Request $request, int $modelos_edit)
-    {
-        $modelos_edit = ModelVehiculo::findOrFail($modelos_edit);
-        return view('vehiculos.modelos.modelosEdit', compact('modelos'));
-    }
-
-
     public function update(Request $request, $modelos_id)
     {
         $request->validate([
-            'name_model' => 'required',
-            'brand' => 'required'
+            'nameModel' => 'required',
+            'nameMarca' => 'required'
         ]);
+        // dd($request);
 
         $modelos_edit = ModelVehiculo::findOrFail($modelos_id);
         $modelos_edit->name_model = $request->nameModel;
         $modelos_edit->brand = $request->nameMarca;
         $modelos_edit->save();
 
-        return redirect()->route("categorias.index");
+        return redirect()->route("modelos.index");
     }
+
+    public function edit(Request $request, int $modelos_edit)
+    {
+        $modelos = ModelVehiculo::findOrFail($modelos_edit);
+        $marcas = MarcaVehiculo::all();
+        return view('vehiculos.modelos.modelosEdit', compact('modelos', 'marcas'));
+    }
+
 
     public function destroyer(ModelVehiculo $modelos_eliminar)
     {

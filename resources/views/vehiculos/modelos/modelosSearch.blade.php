@@ -27,7 +27,7 @@
     <!-- Tabla de modelos -->
     <div class="card shadow">
         <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Vehiculos</h5>
+            <h5 class="mb-0">Modelos</h5>
         </div>
         <div class="card-body p-0">
             <table id="vehiculos-table" class="table table-striped table-hover mb-0">

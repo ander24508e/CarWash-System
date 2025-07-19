@@ -20,14 +20,32 @@ class MarcaVehiculoController extends Controller
         return view('vehiculos.marcas.marcasCreate');
     }
 
-public function store(Request $request)
-{
-    $request->validate([
-        'name_brand' => 'required|string|max:255',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-    ]);
+        public function search(Request $request)
+    {
+        $searchTerm = $request->input('searchTerm');
 
-    try {
+        $marcas_buscar = MarcaVehiculo::query();
+
+        if ($searchTerm) {
+            $marcas_buscar->where(function ($query) use ($searchTerm) {
+                $query->where('name_brand', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        $marcas_buscar = $marcas_buscar->paginate(5);
+
+        return view('vehiculos.marcas.marcasSearch', compact('marcas_buscar'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+
+            'name_brand' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+
         $extension = $request->file('image')->getClientOriginalExtension();
         $imageName = Str::slug($request->name_brand) . '-' . time() . '.' . $extension;
         $imagePath = $request->file('image')->storeAs('', $imageName, 'marcas');
@@ -40,11 +58,24 @@ public function store(Request $request)
 
         return redirect()->route('marcas.index')
             ->with('success', 'Marca creada exitosamente');
-    } catch (\Exception $e) {
-        return back()->withInput()
-            ->with('error', 'Error al subir la imagen: ' . $e->getMessage());
+
+        try {
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $imageName = Str::slug($request->name_brand) . '-' . time() . '.' . $extension;
+            $imagePath = $request->file('image')->storeAs('', $imageName, 'marcas');
+
+            MarcaVehiculo::create([
+                'name_brand' => $request->name_brand,
+                'image' => $imagePath,
+            ]);
+
+            return redirect()->route('marcas.index')
+                ->with('success', 'Marca creada exitosamente');
+        } catch (\Exception $e) {
+            return back()->withInput()
+                ->with('error', 'Error al subir la imagen: ' . $e->getMessage());
+        }
     }
-}
 
 
     public function edit($id)
