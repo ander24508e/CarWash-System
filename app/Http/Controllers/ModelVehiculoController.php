@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ModelVehiculo;
 use Illuminate\Http\Request;
+use App\Models\MarcaVehiculo;
 
 class ModelVehiculoController extends Controller
 {
@@ -15,7 +16,8 @@ class ModelVehiculoController extends Controller
 
     public function create()
     {
-        return view('vehiculos.modelos.modelosCreate');
+        $marcas = MarcaVehiculo::all();
+        return view('vehiculos.modelos.modelosCreate', compact('marcas'));
     }
 
     public function search(Request $request)

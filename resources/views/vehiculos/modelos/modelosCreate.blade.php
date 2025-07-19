@@ -15,14 +15,16 @@
                 @method('POST')
 
                 <div class="mb-3 row">
-                    <label for="marca" class="col-sm-2 col-form-label">Marca:</label>
+                    <label for="nameCustomer" class="col-sm-2 col-form-label">Propietario</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="marca" name="nameMarca"
-                            value="{{ old('nameMarca', $modelos->nameMarca ?? '') }}">
+                        <select id="nameCustomer" name="nameCustomer" class="form-control">
+                            @foreach ($marcas as $marca)
+                            <option value="{{ $marca->id }}">
+                                {{ $marca->name_brand }}
+                            </option>
+                            @endforeach
+                        </select>
                     </div>
-                    @error('nameMarca')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
                 </div>
 
                 <div class="mb-3 row">

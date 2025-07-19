@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name_brand');
+            $table->string('image')->nullable(); // Assuming you want to store an image path
         });
     }
 
