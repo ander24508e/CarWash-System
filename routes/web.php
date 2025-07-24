@@ -103,6 +103,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/ventas', [VentasController::class, 'index'])->name('ventas.index');
     Route::get('/agregar-ventas', [VentasController::class, 'create'])->name('ventas.create');
+    Route::get('/editar-ventas/{ventas_edit}', [ServiciosController::class, 'edit'])->name('ventas.edit');
+    Route::get('/buscar-ventas', [ServiciosController::class, 'search'])->name('ventas.buscar');
+    Route::post('/agregar-ventas', [ServiciosController::class, 'store'])->name('ventas.store');
+    Route::put('/actualizar-ventas/{ventas_id}', [ServiciosController::class, 'update'])->name('ventas.update');
+    Route::delete('/eliminar-ventas/{ventas}', [ServiciosController::class, 'destroyer'])->name('ventas.delete');
+
 
     Route::get('/facturas', [FacturasController::class, 'index'])->name('facturas.index');
     Route::get('/agregar-facturas', [FacturasController::class, 'create'])->name('facturas.create');

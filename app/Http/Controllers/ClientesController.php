@@ -10,12 +10,12 @@ class ClientesController extends Controller
     public function index()
     {
         $clientes = Clientes::orderBy('id', 'asc')->paginate(5);
-        return view("clientes.clientes", compact('clientes'));
+        return view("contabilidad.clientes.clientes", compact('clientes'));
     }
 
     public function create()
     {
-        return view('clientes.clientesCreate');
+        return view('contabilidad.clientes.clientesCreate');
     }
 
     public function search(Request $request)
@@ -34,7 +34,7 @@ class ClientesController extends Controller
 
         $clientes_buscar = $clientes_buscar->paginate(5);
 
-        return view('clientes.clientesSearch', compact('clientes_buscar'));
+        return view('contabilidad.clientes.clientesSearch', compact('clientes_buscar'));
     }
     public function store(Request $request)
     {
@@ -86,7 +86,7 @@ class ClientesController extends Controller
     public function edit(Request $request, int $clientes_edit)
     {
         $clientes = Clientes::findOrFail($clientes_edit);
-        return view('clientes.clientesEdit', compact('clientes'));
+        return view('contabilidad.clientes.clientesEdit', compact('clientes'));
     }
 
     public function destroyer(Clientes $clientes_eliminar)
