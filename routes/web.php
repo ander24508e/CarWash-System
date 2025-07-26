@@ -75,7 +75,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/actualizar-vehiculos/{vehiculos_id}', [VehiculosController::class, 'update'])->name('vehiculos.update');
     Route::delete('/eliminar-vehiculos/{vehiculos_eliminar}', [VehiculosController::class, 'destroyer'])->name('vehiculos.delete');
 
-    Route::get('/ver-marcas-vehiculos', [MarcaVehiculoController::class, 'index'])->name('marcas.index');
+    Route::get('/marcas-vehiculos', [MarcaVehiculoController::class, 'index'])->name('marcas.index');
     Route::get('/agregar-marcas-vehiculos', [MarcaVehiculoController::class, 'create'])->name('marcas.create');
     Route::get('/editar-marcas-vehiculos/{marcas_edit}', [MarcaVehiculoController::class, 'edit'])->name('marcas.edit');
     Route::get('/buscar-marcas-vehiculos', [MarcaVehiculoController::class, 'search'])->name(name: 'marcas.buscar');
@@ -83,7 +83,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/actualizar-marcas-vehiculos/{marcas_id}', [MarcaVehiculoController::class, 'update'])->name('marcas.update');
     Route::delete('/eliminar-marcas-vehiculos/{marcas_eliminar}', [MarcaVehiculoController::class, 'destroyer'])->name('marcas.delete');
 
-    Route::get('/ver-modelos-vehiculos', [ModelVehiculoController::class, 'index'])->name('modelos.index');
+    Route::get('/modelos-vehiculos', [ModelVehiculoController::class, 'index'])->name('modelos.index');
     Route::get('/agregar-modelos-vehiculos', [ModelVehiculoController::class, 'create'])->name('modelos.create');
     Route::get('/editar-modelos-vehiculos/{modelos_edit}', [ModelVehiculoController::class, 'edit'])->name('modelos.edit');
     Route::get('/buscar-modelos-vehiculos', [ModelVehiculoController::class, 'search'])->name('modelos.buscar');
