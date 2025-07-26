@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class CategoriasController extends Controller
 {
-    public function index()
+public function index()
     {
-        $categorias = Categorias::orderBy('id', 'asc')->paginate(5);
+        $categorias = Categorias::orderBy('id', 'asc')->paginate(5); 
         return view("inventario.categorias.categorias", compact('categorias'));
     }
 

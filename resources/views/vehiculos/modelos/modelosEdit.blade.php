@@ -7,7 +7,7 @@
     <div class="container">
         <div class="card text-center">
             <div class="card-header">
-                <h1>AGREGAR MODELO</h1>
+                <h1>EDITAR MODELO</h1>
             </div>
             <div class="card-body">
                 <form method="post" action="{{ route('modelos.update', ['modelos_id' => $modelos->id]) }}">

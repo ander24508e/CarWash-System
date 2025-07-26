@@ -20,7 +20,7 @@ class MarcaVehiculoController extends Controller
         return view('vehiculos.marcas.marcasCreate');
     }
 
-        public function search(Request $request)
+    public function search(Request $request)
     {
         $searchTerm = $request->input('searchTerm');
 
@@ -37,46 +37,38 @@ class MarcaVehiculoController extends Controller
         return view('vehiculos.marcas.marcasSearch', compact('marcas_buscar'));
     }
 
+
     public function store(Request $request)
     {
         $request->validate([
-
             'name_brand' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
-
-        $extension = $request->file('image')->getClientOriginalExtension();
-        $imageName = Str::slug($request->name_brand) . '-' . time() . '.' . $extension;
-        $imagePath = $request->file('image')->storeAs('', $imageName, 'marcas');
-
-        // ❗ Aquí es donde faltaba guardar en DB
-        MarcaVehiculo::create([
-            'name_brand' => $request->name_brand,
-            'image' => $imagePath,
-        ]);
-
-        return redirect()->route('marcas.index')
-            ->with('success', 'Marca creada exitosamente');
-
         try {
-            $extension = $request->file('image')->getClientOriginalExtension();
-            $imageName = Str::slug($request->name_brand) . '-' . time() . '.' . $extension;
-            $imagePath = $request->file('image')->storeAs('', $imageName, 'marcas');
+            // Verificar que el archivo existe
+            if (!$request->hasFile('image')) {
+                throw new \Exception('No se recibió ningún archivo de imagen');
+            }
 
+            $image = $request->file('image');
+
+            // Generar nombre único
+            $imageName = Str::slug($request->name_brand) . '-' . time() . '.' . $image->getClientOriginalExtension();
+
+            // Crear registro en la base de datos
             MarcaVehiculo::create([
                 'name_brand' => $request->name_brand,
-                'image' => $imagePath,
+                'image' => 'marcas/' . $imageName // Guardamos la ruta relativa
             ]);
 
             return redirect()->route('marcas.index')
                 ->with('success', 'Marca creada exitosamente');
         } catch (\Exception $e) {
             return back()->withInput()
-                ->with('error', 'Error al subir la imagen: ' . $e->getMessage());
+                ->with('error', 'Error al guardar la marca: ' . $e->getMessage());
         }
     }
-
 
     public function edit($id)
     {
@@ -96,14 +88,14 @@ class MarcaVehiculoController extends Controller
             $data = ['name_brand' => $request->name_brand];
 
             if ($request->hasFile('image')) {
-                // Eliminar imagen anterior
+                // Eliminar imagen anterior si existe
                 if ($marca->image && Storage::disk('public')->exists($marca->image)) {
                     Storage::disk('public')->delete($marca->image);
                 }
 
                 // Subir nueva imagen
                 $imageName = Str::slug($request->name_brand) . '-' . time() . '.' . $request->image->extension();
-                $data['image'] = $request->image->storeAs('marcas', $imageName, 'public');
+                
             }
 
             $marca->update($data);
@@ -116,7 +108,7 @@ class MarcaVehiculoController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroyer($id)
     {
         try {
             $marca = MarcaVehiculo::findOrFail($id);

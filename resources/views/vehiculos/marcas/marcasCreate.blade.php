@@ -1,3 +1,4 @@
+
 @extends('menu')
 @section('contenido')
     @vite(['resources/scss/allStyles.scss'])
@@ -62,3 +63,5 @@
         </div>
     </div>
 @endsection
+
+

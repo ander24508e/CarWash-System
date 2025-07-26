@@ -82,5 +82,10 @@
             <i class="bi bi-arrow-left me-2"></i>Volver al menú
         </a>
     </div>
+
+
+
+
+    
 </div>
 @endsection

@@ -23,6 +23,9 @@
         <div class="card shadow">
             <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">CATEGORÍAS</h5>
+                <div class="text-muted small">
+                    Mostrando {{ $categorias->firstItem() }} a {{ $categorias->lastItem() }} de {{ $categorias->total() }} registros
+                </div>
             </div>
             <div class="card-body p-0">
                 <table id="categorias-table" class="table table-striped table-hover mb-0">
@@ -59,6 +62,11 @@
                         @endforeach
                     </tbody>
                 </table>
+                
+                <!-- Paginación -->
+                <div class="d-flex justify-content-center mt-4 px-4">
+                    {{ $categorias->links() }}
+                </div>
             </div>
         </div>
         <!-- Botón volver -->
@@ -68,4 +76,32 @@
             </a>
         </div>
     </div>
+
+    <!-- Estilos para la paginación -->
+    <style>
+        .pagination {
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 1rem 0;
+        }
+        .pagination .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: white;
+        }
+        .pagination .page-link {
+            color: #0d6efd;
+            margin: 0 3px;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #dee2e6;
+        }
+        .pagination .page-link:hover {
+            background-color: #e9ecef;
+        }
+    </style>
 @endsection

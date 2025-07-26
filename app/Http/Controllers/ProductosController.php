@@ -10,14 +10,8 @@ class ProductosController extends Controller
 {
     public function index()
     {
-        $productos = Productos::orderBy('id', 'asc')->paginate(5);
+        $productos = Productos::orderBy('id', 'asc')->paginate(10); // Cambia 10 por el número de items por página que desees
         return view("inventario.productos.productos", compact('productos'));
-    }
-
-    public function create()
-    {
-        $categorias = Categorias::all();
-        return view('inventario.productos.productosCreate', compact('categorias'));
     }
 
     public function search(Request $request)
@@ -32,10 +26,33 @@ class ProductosController extends Controller
             });
         }
 
-        $productos_buscar = $productos_buscar->paginate(5);
+        $productos_buscar = $productos_buscar->paginate(10); // Mismo número que en el index
 
         return view('inventario.productos.productosSearch', compact('productos_buscar'));
     }
+
+    public function create()
+    {
+        $categorias = Categorias::all();
+        return view('inventario.productos.productosCreate', compact('categorias'));
+    }
+
+    // public function search(Request $request)
+    // {
+    //     $searchTerm = $request->input('searchTerm');
+
+    //     $productos_buscar = Productos::query();
+
+    //     if ($searchTerm) {
+    //         $productos_buscar->where(function ($query) use ($searchTerm) {
+    //             $query->where('name_product', 'LIKE', '%' . $searchTerm . '%');
+    //         });
+    //     }
+
+    //     $productos_buscar = $productos_buscar->paginate(5);
+
+    //     return view('inventario.productos.productosSearch', compact('productos_buscar'));
+    // }
 
     public function store(Request $request)
     {
