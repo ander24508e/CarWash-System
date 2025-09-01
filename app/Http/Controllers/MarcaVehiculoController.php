@@ -11,7 +11,7 @@ class MarcaVehiculoController extends Controller
 {
     public function index()
     {
-        $marcas = MarcaVehiculo::orderBy('name_brand', 'asc')->paginate(5);
+        $marcas = MarcaVehiculo::orderBy('name_brand', 'asc')->paginate(10);
         return view("vehiculos.marcas.marcas", compact('marcas'));
     }
 

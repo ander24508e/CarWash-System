@@ -11,7 +11,7 @@ class VehiculosController extends Controller
 
     public function index()
     {
-        $vehiculos = vehiculos::orderBy('id', 'asc')->paginate(5);
+        $vehiculos = vehiculos::orderBy('id', 'asc')->paginate(10);
         return view("vehiculos.vehiculos", compact('vehiculos'));
     }
 

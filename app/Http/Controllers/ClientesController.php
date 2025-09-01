@@ -9,7 +9,7 @@ class ClientesController extends Controller
 {
     public function index()
     {
-        $clientes = Clientes::orderBy('id', 'asc')->paginate(5);
+        $clientes = Clientes::orderBy('id', 'asc')->paginate(10);
         return view("contabilidad.clientes.clientes", compact('clientes'));
     }
 
@@ -36,6 +36,7 @@ class ClientesController extends Controller
 
         return view('contabilidad.clientes.clientesSearch', compact('clientes_buscar'));
     }
+    
     public function store(Request $request)
     {
         $request->validate([

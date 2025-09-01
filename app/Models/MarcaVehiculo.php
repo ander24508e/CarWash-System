@@ -9,4 +9,12 @@ class MarcaVehiculo extends Model
 {
     use HasFactory;
     protected $fillable = ['name_brand', 'image'];
+
+
+    public function ModelVehiculo()
+    {
+        return $this->hasMany(Productos::class, 'name_brand', 'id');
+    }
+
+    
 }

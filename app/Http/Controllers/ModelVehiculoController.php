@@ -10,7 +10,10 @@ class ModelVehiculoController extends Controller
 {
     public function index()
     {
-        $modelos = ModelVehiculo::orderBy('id', 'asc')->paginate(5);
+        $modelos = ModelVehiculo::with('MarcaVehiculo')
+        ->orderBy('id', 'asc')
+        ->paginate(10);
+        
         return view("vehiculos.modelos.modelos", compact('modelos'));
     }
 

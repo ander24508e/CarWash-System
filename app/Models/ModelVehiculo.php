@@ -9,4 +9,10 @@ class ModelVehiculo extends Model
 {
     use HasFactory;
     protected $fillable = ['name_model', 'brand'];
+
+    public function MarcaVehiculo()
+    {
+        return $this->belongsTo(MarcaVehiculo::class, 'brand', 'id');
+    }
 }
+

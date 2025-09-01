@@ -45,7 +45,7 @@
                                 <td>{{ $cliente->name_customer }}</td>
                                 <td>{{ $cliente->lastname_customer }}</td>
                                 <td>{{ $cliente->identification }}</td>
-                                <td>{{ $cliente->email}}</td>
+                                <td>{{ $cliente->email }}</td>
                                 <td>{{ $cliente->phone }}</td>
                                 <td>
                                     <a href="{{ route('clientes.edit', ['clientes_edit' => $cliente->id]) }}"
@@ -67,6 +67,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-center mt-3">
+                    {{ $clientes->links('pagination::bootstrap-4') }}
+                </div>
             </div>
         </div>
         <!-- Botón volver -->

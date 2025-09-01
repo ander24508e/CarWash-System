@@ -64,9 +64,9 @@
                 @endforeach
                 </tbody>
             </table>
-            <div class="d-flex justify-content-center mt-3">
-                {{ $categorias_buscar->appends(['searchTerm' => request()->searchTerm])->links('pagination::bootstrap-4') }}
-            </div>
+                <div class="d-flex justify-content-center mt-3">
+                    {{ $categorias_buscar->links('pagination::bootstrap-4') }}
+                </div>
         </div>
     </div>
     @endif
