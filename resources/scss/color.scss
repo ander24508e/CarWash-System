@@ -1,0 +1,55 @@
+// =============================================
+// PALETA DE COLORES
+// =============================================
+
+// Colores Primarios (Rojo)
+$carwash-primary-50: #fff5f5;
+$carwash-primary-100: #ffe3e3;
+$carwash-primary-200: #ffbdbd;
+$carwash-primary-300: #ff9999;
+$carwash-primary-400: #ff4d4d;
+$carwash-primary-500: #d82128;
+$carwash-primary-600: #b41b21;
+$carwash-primary-700: #8f161b;
+$carwash-primary-800: #661015;
+$carwash-primary-900: #3d0a0c;
+
+// Colores Oscuros
+$carwash-dark-50: #f5f5f5;
+$carwash-dark-100: #e5e5e5;
+$carwash-dark-200: #cccccc;
+$carwash-dark-300: #999999;
+$carwash-dark-400: #666666;
+$carwash-dark-500: #1e1e1e;
+$carwash-dark-600: #141414;
+$carwash-dark-700: #0a0a0a;
+$carwash-dark-800: #050505;
+$carwash-dark-900: #000000;
+
+// Colores de Acento
+$carwash-accent-50: #fffbea;
+$carwash-accent-100: #fff3c4;
+$carwash-accent-200: #fce588;
+$carwash-accent-300: #fadb5f;
+$carwash-accent-400: #f7c948;
+$carwash-accent-500: #f0b429;
+$carwash-accent-600: #de911d;
+$carwash-accent-700: #cb6e17;
+$carwash-accent-800: #b44d12;
+$carwash-accent-900: #8d2b0b;
+
+// Alias
+$primary-color: $carwash-primary-500;
+$primary-hover: $carwash-primary-600;
+$error-color: $carwash-primary-500;
+$success-color: #28a745;
+
+$bg-light: #ffffff;
+$bg-dark: $carwash-dark-500;
+
+$transition-time: 0.3s;
+
+// Sombras
+$shadow-soft: 0 2px 15px -3px rgba(0, 0, 0, 0.07);
+$shadow-glow: 0 0 20px rgba(216, 33, 40, 0.4);
+$shadow-glow-lg: 0 0 40px rgba(216, 33, 40, 0.6);
