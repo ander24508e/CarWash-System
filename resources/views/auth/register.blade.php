@@ -16,15 +16,13 @@
 
         <!-- Logo -->
         <div class="text-center mb-3">
-            <img src="{{ asset('images/lavadora-logo.jpg') }}"
-                alt="logo-endara"
+            <img src="{{ asset('images/lavadora-logo.jpg') }}" alt="logo-endara"
                 class="w-20 h-20 mx-auto object-contain rounded-full shadow-md">
             <h1 class="text-base font-bold text-gray-700 mt-1">Registro de Usuario</h1>
         </div>
 
         <!-- FORMULARIO -->
-        <form method="POST" action="{{ route('register') }}"
-              class="space-y-4 mx-auto w-full max-w-xs">
+        <form method="POST" action="{{ route('register') }}" class="space-y-4 mx-auto w-full max-w-xs">
             @csrf
 
             <!-- Nombre -->
@@ -33,8 +31,7 @@
                     Nombre Completo
                 </label>
                 <input id="name" type="text" name="name"
-                    class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
-                    value="{{ old('name') }}"
+                    class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg" value="{{ old('name') }}"
                     required autofocus autocomplete="name">
                 <x-input-error :messages="$errors->get('name')" class="text-red-500 text-xs mt-1" />
             </div>
@@ -45,8 +42,7 @@
                     Correo Electrónico
                 </label>
                 <input id="email" type="email" name="email"
-                    class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
-                    value="{{ old('email') }}"
+                    class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg" value="{{ old('email') }}"
                     required autocomplete="username">
                 <x-input-error :messages="$errors->get('email')" class="text-red-500 text-xs mt-1" />
             </div>
@@ -56,22 +52,38 @@
                 <label for="password" class="block text-xs font-semibold text-gray-700 mb-1">
                     Contraseña
                 </label>
-                <input id="password" type="password" name="password"
-                    class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
-                    required autocomplete="new-password">
+
+                <div class="relative">
+                    <input id="password" type="password" name="password"
+                        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg" required
+                        autocomplete="new-password">
+
+                    <i class="bi bi-eye-slash absolute right-3 top-2.5 text-gray-600 cursor-pointer"
+                        onclick="togglePassword('password', this)"></i>
+                </div>
+
                 <x-input-error :messages="$errors->get('password')" class="text-red-500 text-xs mt-1" />
             </div>
+
 
             <!-- Confirm Password -->
             <div>
                 <label for="password_confirmation" class="block text-xs font-semibold text-gray-700 mb-1">
                     Confirmar Contraseña
                 </label>
-                <input id="password_confirmation" type="password" name="password_confirmation"
-                    class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
-                    required autocomplete="new-password">
+
+                <div class="relative">
+                    <input id="password_confirmation" type="password" name="password_confirmation"
+                        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg" required
+                        autocomplete="new-password">
+
+                    <i class="bi bi-eye-slash absolute right-3 top-2.5 text-gray-600 cursor-pointer"
+                        onclick="togglePassword('password_confirmation', this)"></i>
+                </div>
+
                 <x-input-error :messages="$errors->get('password_confirmation')" class="text-red-500 text-xs mt-1" />
             </div>
+
 
             <!-- Botones -->
             <button type="submit"
@@ -88,5 +100,24 @@
     </div>
 
 </body>
+
+<script>
+    function togglePassword(id, icon) {
+        const input = document.getElementById(id);
+
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("bi-eye-slash");
+            icon.classList.add("bi-eye");
+        } else {
+            input.type = "password";
+            icon.classList.remove("bi-eye");
+            icon.classList.add("bi-eye-slash");
+        }
+    }
+</script>
+
+
+
 
 </html>

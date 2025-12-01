@@ -18,32 +18,36 @@
 
         <!-- Logo -->
         <div class="text-center mb-3">
-            <img src="{{ asset('images/lavadora-logo.jpg') }}"
-                 alt="logo-endara"
-                 class="w-24 h-24 mx-auto object-contain rounded-full shadow-md">
+            <img src="{{ asset('images/lavadora-logo.jpg') }}" alt="logo-endara"
+                class="w-24 h-24 mx-auto object-contain rounded-full shadow-md">
             <h1 class="text-base font-bold text-gray-700 mt-1">Lavadora Endara</h1>
         </div>
 
         <!-- Formulario -->
-        <form method="POST" action="{{ route('login') }}"
-              class="space-y-4 mx-auto w-full max-w-xs">
+        <form method="POST" action="{{ route('login') }}" class="space-y-4 mx-auto w-full max-w-xs">
             @csrf
 
             <!-- Email -->
             <div>
                 <label class="block text-xs font-semibold text-gray-700 mb-1">Correo Electrónico</label>
                 <input id="email" name="email" type="email"
-                       class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
-                       placeholder="tu@email.com">
+                    class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg" placeholder="tu@email.com">
             </div>
 
             <!-- Password -->
             <div>
                 <label class="block text-xs font-semibold text-gray-700 mb-1">Contraseña</label>
-                <input id="password" name="password" type="password"
-                       class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg"
-                       placeholder="••••••••">
+
+                <div class="relative">
+                    <input id="password" name="password" type="password"
+                        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg" placeholder="••••••••">
+
+                    <!-- Ícono ojo -->
+                    <i class="bi bi-eye-slash absolute right-3 top-2.5 text-gray-600 cursor-pointer"
+                        onclick="togglePassword('password', this)"></i>
+                </div>
             </div>
+
 
             <!-- Remember / Forgot -->
             <div class="flex items-center justify-between text-xs">
@@ -59,7 +63,7 @@
 
             <!-- Botón -->
             <button type="submit"
-                    class="w-full py-2 bg-red-600 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-red-700 transition">
+                class="w-full py-2 bg-red-600 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-red-700 transition">
                 Iniciar Sesión
             </button>
 
@@ -82,6 +86,23 @@
     </div>
 
 </body>
+
+<script>
+    function togglePassword(id, icon) {
+        const input = document.getElementById(id);
+
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("bi-eye-slash");
+            icon.classList.add("bi-eye");
+        } else {
+            input.type = "password";
+            icon.classList.remove("bi-eye");
+            icon.classList.add("bi-eye-slash");
+        }
+    }
+</script>
+
 
 
 </html>

@@ -1,50 +1,75 @@
-<section>
+<form method="post" action="{{ route('password.update') }}" class="profile-form">
+    @csrf
+    @method('put')
 
-    @vite('resources/scss/profile.scss')
+    <div class="form-group password-input-group">
+        <label for="update_password_current_password" class="form-label">CONTRASEÑA ACTUAL</label>
+        <div class="password-container">
+            <input type="password" id="update_password_current_password" name="current_password" 
+                   class="form-input password-field"
+                   autocomplete="current-password" required placeholder="Ingresa tu contraseña actual">
+            <i class="bi bi-eye-slash password-toggle" 
+               onclick="togglePassword('update_password_current_password', this)"></i>
+        </div>
+        @error('current_password', 'updatePassword')
+            <span class="error-message">{{ $message }}</span>
+        @enderror
+    </div>
+
+    <div class="form-group password-input-group">
+        <label for="update_password_password" class="form-label">NUEVA CONTRASEÑA</label>
+        <div class="password-container">
+            <input type="password" id="update_password_password" name="password" 
+                   class="form-input password-field"
+                   autocomplete="new-password" required placeholder="Ingresa tu nueva contraseña">
+            <i class="bi bi-eye-slash password-toggle" 
+               onclick="togglePassword('update_password_password', this)"></i>
+        </div>
+        @error('password', 'updatePassword')
+            <span class="error-message">{{ $message }}</span>
+        @enderror
+    </div>
+
+    <div class="form-group password-input-group">
+        <label for="update_password_password_confirmation" class="form-label">CONFIRMAR CONTRASEÑA</label>
+        <div class="password-container">
+            <input type="password" id="update_password_password_confirmation" name="password_confirmation"
+                   class="form-input password-field" 
+                   autocomplete="new-password" required placeholder="Confirma tu nueva contraseña">
+            <i class="bi bi-eye-slash password-toggle" 
+               onclick="togglePassword('update_password_password_confirmation', this)"></i>
+        </div>
+        @error('password_confirmation', 'updatePassword')
+            <span class="error-message">{{ $message }}</span>
+        @enderror
+    </div>
+
+    <div class="form-group" style="grid-column: 1 / -1;">
+        <button type="submit" class="btn-primary-custom save-button">
+            <i class="bi bi-shield-lock button-icon"></i>
+            {{ __('Actualizar Contraseña') }}
+        </button>
+    </div>
+</form>
+
+<script>
+function togglePassword(inputId, iconElement) {
+    const passwordInput = document.getElementById(inputId);
+    const isPassword = passwordInput.type === 'password';
     
-    <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {{ __('Update Password') }}
-        </h2>
-
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __('Ensure your account is using a long, random password to stay secure.') }}
-        </p>
-
-    </header>
-
-    <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
-        @csrf
-        @method('put')
-
-        <div>
-            <x-input-label for="update_password_current_password" :value="__('Current Password')" />
-            <x-text-input id="update_password_current_password" name="current_password" type="password"
-                class="mt-1 block w-full" autocomplete="current-password" />
-            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
-        </div>
-
-        <div>
-            <x-input-label for="update_password_password" :value="__('New Password')" />
-            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full"
-                autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
-        </div>
-
-        <div>
-            <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
-            <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password"
-                class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
-
-            @if (session('status') === 'password-updated')
-                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600 dark:text-gray-400">{{ __('Saved.') }}</p>
-            @endif
-        </div>
-    </form>
-</section>
+    // Cambiar tipo de input
+    passwordInput.type = isPassword ? 'text' : 'password';
+    
+    // Cambiar icono
+    if (isPassword) {
+        iconElement.classList.remove('bi-eye-slash');
+        iconElement.classList.add('bi-eye');
+    } else {
+        iconElement.classList.remove('bi-eye');
+        iconElement.classList.add('bi-eye-slash');
+    }
+    
+    // Mantener el foco en el input
+    passwordInput.focus();
+}
+</script>

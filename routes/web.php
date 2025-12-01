@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\EmpleadosController;
+use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\FacturasController;
 use App\Http\Controllers\MarcaVehiculoController;
 use App\Http\Controllers\ModelVehiculoController;
@@ -26,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('auth.login');
 });
 
 Route::get('/menu', function () {
@@ -40,6 +41,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('/empresa', [EmpresaController::class, 'edit'])->name('empresa.edit');
+    Route::patch('/empresa', [EmpresaController::class, 'update'])->name('empresa.update');
 
     Route::get('/productos', [ProductosController::class, 'index'])->name('productos.index');
     Route::get('/agregar-productos', [ProductosController::class, 'create'])->name('productos.create');
