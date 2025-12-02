@@ -14,6 +14,7 @@
     <nav class="navbar navbar-expand-lg fixed-top custom-navbar">
         <div class="container-fluid">
             <!-- Logo y marca a la izquierda -->
+@auth
             <a class="navbar-brand d-flex align-items-center me-4" href="/menu">
                 @auth
                     @if(Auth::user()->empresa && Auth::user()->empresa->logo)
@@ -37,6 +38,7 @@
                     <small class="brand-subtitle">desde 1978</small>
                 </div>
             </a>
+@endauth
 
             <!-- Menú de navegación principal -->
             <div class="collapse navbar-collapse" id="navbarMain">
