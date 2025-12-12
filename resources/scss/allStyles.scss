@@ -10,7 +10,7 @@ body {
     background: #f8f9fa;
     font-family: 'Inter', sans-serif;
     color: $carwash-dark-500;
-    padding-top: 76px; // Compensa el navbar fijo
+    padding-top: 76px;
 }
 
 .main-content {
@@ -123,7 +123,6 @@ body {
             }
         }
 
-        // Menú de usuario a la derecha
         &.ms-auto {
             .nav-item {
                 .nav-link.user-menu {
@@ -163,10 +162,25 @@ body {
     box-shadow: $shadow-soft;
     transition: all 0.3s ease;
     height: 100%;
+    overflow: hidden;
 
     &:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-header {
+        padding: 1.5rem 1.5rem 0;
+        
+        .card-title {
+            color: $carwash-dark-500;
+            font-weight: 600;
+            font-size: 1.1rem;
+            
+            i {
+                color: $carwash-primary-500;
+            }
+        }
     }
 
     .card-body {
@@ -181,6 +195,18 @@ body {
         .card-text {
             color: $carwash-dark-400;
             margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            color: $carwash-dark-600;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-text {
+            color: $carwash-dark-400;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
         }
 
         .btn-primary {
@@ -198,28 +224,7 @@ body {
 }
 
 // =============================================
-// RESPONSIVE
-// =============================================
-
-@media (max-width: 991.98px) {
-    .custom-navbar {
-        .navbar-collapse {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: $shadow-soft;
-            margin-top: 1rem;
-        }
-
-        .navbar-nav .nav-item {
-            margin-right: 0;
-            margin-bottom: 0.5rem;
-        }
-    }
-}
-
-// =============================================
-// ESTILOS EXISTENTES (MANTENER)
+// ESTILOS PARA BÚSQUEDA Y BOTÓN AGREGAR
 // =============================================
 
 .buscar {
@@ -259,9 +264,27 @@ body {
     }
 }
 
+// =============================================
+// ESTILOS PARA TABLAS
+// =============================================
+
 .table {
     border-radius: 8px;
     box-shadow: $shadow-soft;
+    
+    // Centrar contenido en todas las celdas
+    td, th {
+        vertical-align: middle;
+        text-align: center;
+    }
+    
+    // Alinear a la izquierda columnas de nombre y email
+    th:nth-child(2),
+    td:nth-child(2),
+    th:nth-child(3),
+    td:nth-child(3) {
+        text-align: left;
+    }
 }
 
 .table thead {
@@ -276,83 +299,259 @@ body {
     background-color: $carwash-primary-50;
 }
 
-// =============================================
-// ESTILOS PARA EL PERFIL DE USUARIO
-// =============================================
-
-// Contenedor principal del perfil
-.profile-container {
-    max-width: 1200px;
-    margin: 0 auto;
+// Botones de acción en tablas
+.btn-sm {
+    width: 35px;
+    height: 35px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    
+    i {
+        font-size: 0.9rem;
+    }
+    
+    &.rounded-circle {
+        border-radius: 50% !important;
+    }
 }
 
-// Foto de perfil
-.profile-photo-container {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 4px solid $carwash-primary-100;
+// Contenedor de botones de acción
+.btn-group {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+}
 
-    &:hover {
-        border-color: $carwash-primary-300;
+// =============================================
+// BADGES DE ROLES
+// =============================================
+
+.badge {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    border-radius: 6px;
+    
+    &.bg-danger {
+        background-color: $carwash-primary-500 !important;
+    }
+    
+    &.bg-primary {
+        background-color: #3b82f6 !important;
+    }
+    
+    &.bg-success {
+        background-color: #10b981 !important;
+    }
+}
+
+// =============================================
+// CARDS CON SHADOW
+// =============================================
+
+.card {
+    &.shadow {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+                    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    }
+    
+    .card-header {
+        background-color: white;
+        border-bottom: 2px solid $carwash-dark-100;
+        padding: 1.25rem 1.5rem;
         
-        .profile-photo-overlay {
-            opacity: 1;
+        h5 {
+            font-weight: 600;
+            color: $carwash-dark-600;
+            margin: 0;
+        }
+        
+        .badge {
+            font-size: 0.875rem;
+            padding: 0.5rem 1rem;
         }
     }
 }
 
-.profile-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: all 0.3s ease;
-}
+// =============================================
+// FORMULARIOS DE CREATE/EDIT
+// =============================================
 
-.profile-photo-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(216, 33, 40, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: all 0.3s ease;
-
-    i {
+.card.text-center {
+    .card-header {
+        background: linear-gradient(135deg, $carwash-primary-500 0%, $carwash-primary-600 100%);
         color: white;
-        font-size: 1.5rem;
+        padding: 2rem;
+        
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
     }
-}
-
-// Inputs personalizados
-.custom-input {
-    border: 1px solid $carwash-dark-200;
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-
-    &:focus {
-        border-color: $carwash-primary-500;
-        box-shadow: 0 0 0 3px rgba(216, 33, 40, 0.1);
-        outline: none;
+    
+    .card-body {
+        padding: 2.5rem;
+        
+        .form-control,
+        .form-select {
+            border: 1px solid $carwash-dark-200;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+            
+            &:focus {
+                border-color: $carwash-primary-500;
+                box-shadow: 0 0 0 3px rgba(216, 33, 40, 0.1);
+                outline: none;
+            }
+        }
+        
+        .col-form-label {
+            font-weight: 600;
+            color: $carwash-dark-600;
+            text-align: right;
+            padding-top: 0.75rem;
+        }
+        
+        .alert-info {
+            border-radius: 8px;
+            background-color: lighten($carwash-primary-50, 3%);
+            border-left: 4px solid $carwash-primary-500;
+            padding: 0.75rem;
+            
+            small {
+                color: $carwash-dark-600;
+                line-height: 1.6;
+            }
+        }
+        
+        .alert-warning {
+            border-radius: 8px;
+            background-color: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem;
+            
+            small {
+                color: #92400e;
+            }
+        }
     }
-
-    &:disabled {
+    
+    .card-footer {
         background-color: $carwash-dark-50;
-        cursor: not-allowed;
+        padding: 1.5rem 2.5rem;
+        border-top: 2px solid $carwash-dark-100;
+        
+        .btn-dark {
+            background-color: $carwash-dark-600;
+            border-color: $carwash-dark-600;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            
+            &:hover {
+                background-color: $carwash-dark-700;
+                border-color: $carwash-dark-700;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            }
+            
+            &:first-child {
+                background-color: $carwash-primary-500;
+                border-color: $carwash-primary-500;
+                
+                &:hover {
+                    background-color: $carwash-primary-600;
+                    border-color: $carwash-primary-600;
+                }
+            }
+        }
     }
 }
 
-// Botones personalizados
+// =============================================
+// PAGINACIÓN
+// =============================================
+
+.pagination {
+    gap: 0.25rem;
+    
+    .page-link {
+        border: 1px solid $carwash-dark-200;
+        color: $carwash-dark-600;
+        border-radius: 6px;
+        padding: 0.5rem 0.75rem;
+        margin: 0 2px;
+        transition: all 0.2s ease;
+        
+        &:hover {
+            background-color: $carwash-primary-50;
+            border-color: $carwash-primary-300;
+            color: $carwash-primary-600;
+        }
+    }
+    
+    .page-item.active .page-link {
+        background-color: $carwash-primary-500;
+        border-color: $carwash-primary-500;
+        color: white;
+    }
+    
+    .page-item.disabled .page-link {
+        background-color: $carwash-dark-50;
+        border-color: $carwash-dark-200;
+        color: $carwash-dark-400;
+    }
+}
+
+// =============================================
+// ALERTAS
+// =============================================
+
+.alert {
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
+    &.alert-success {
+        background-color: #f0fdf4;
+        color: #166534;
+        border-left: 4px solid #22c55e;
+    }
+    
+    &.alert-danger {
+        background-color: #fef2f2;
+        color: #dc2626;
+        border-left: 4px solid #ef4444;
+    }
+    
+    &.alert-info {
+        background-color: lighten($carwash-primary-50, 3%);
+        color: $carwash-primary-700;
+        border-left: 4px solid $carwash-primary-500;
+        
+        i {
+            color: $carwash-primary-500;
+        }
+    }
+    
+    .btn-close {
+        filter: brightness(0.7);
+    }
+}
+
+// =============================================
+// BOTONES PERSONALIZADOS
+// =============================================
+
 .btn-primary {
     background-color: $carwash-primary-500;
     border-color: $carwash-primary-500;
@@ -401,84 +600,110 @@ body {
     }
 }
 
-// Alertas personalizadas
-.alert {
+// =============================================
+// INPUTS PERSONALIZADOS
+// =============================================
+
+.custom-input {
+    border: 1px solid $carwash-dark-200;
     border-radius: 8px;
-    border: none;
-    padding: 1rem 1.25rem;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
 
-    &.alert-info {
-        background-color: lighten($carwash-primary-50, 2%);
-        border-left: 4px solid $carwash-primary-500;
-        color: $carwash-primary-700;
+    &:focus {
+        border-color: $carwash-primary-500;
+        box-shadow: 0 0 0 3px rgba(216, 33, 40, 0.1);
+        outline: none;
+    }
 
-        i {
-            color: $carwash-primary-500;
-        }
+    &:disabled {
+        background-color: $carwash-dark-50;
+        cursor: not-allowed;
     }
 }
 
-// Tarjetas del perfil
-.custom-card {
-    background: white;
-    border: 1px solid $carwash-dark-100;
-    border-radius: 12px;
-    box-shadow: $shadow-soft;
-    transition: all 0.3s ease;
+.input-group-text {
+    background-color: $carwash-primary-50;
+    border-color: $carwash-dark-200;
+    color: $carwash-primary-600;
+    
+    i {
+        font-size: 1rem;
+    }
+}
+
+// =============================================
+// ESTILOS PARA EL PERFIL DE USUARIO
+// =============================================
+
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.profile-photo-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
     overflow: hidden;
-
-    .card-header {
-        padding: 1.5rem 1.5rem 0;
-        
-        .card-title {
-            color: $carwash-dark-500;
-            font-weight: 600;
-            font-size: 1.1rem;
-            
-            i {
-                color: $carwash-primary-500;
-            }
-        }
-    }
-
-    .card-body {
-        padding: 1.5rem;
-
-        .form-label {
-            color: $carwash-dark-600;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-
-        .form-text {
-            color: $carwash-dark-400;
-            font-size: 0.8rem;
-            margin-top: 0.25rem;
-        }
-    }
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 4px solid $carwash-primary-100;
 
     &:hover {
-        box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.15);
+        border-color: $carwash-primary-300;
+        
+        .profile-photo-overlay {
+            opacity: 1;
+        }
     }
 }
 
-// Responsive
-@media (max-width: 768px) {
-    .profile-photo-container {
-        width: 120px;
-        height: 120px;
-    }
+.profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
 
-    .custom-card .card-body {
-        padding: 1rem;
-    }
+.profile-photo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(216, 33, 40, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
 
-    .btn-primary,
-    .btn-outline-danger,
-    .btn-outline-secondary {
-        padding: 0.625rem 1.25rem;
-        font-size: 0.9rem;
+    i {
+        color: white;
+        font-size: 1.5rem;
     }
+}
+
+// =============================================
+// ANIMACIONES
+// =============================================
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.table tbody tr {
+    animation: fadeIn 0.3s ease-in-out;
 }
 
 // Estados de carga
@@ -504,5 +729,80 @@ body {
         background-color: #fef2f2;
         color: #dc2626;
         border-left: 4px solid #ef4444;
+    }
+}
+
+// =============================================
+// RESPONSIVE
+// =============================================
+
+@media (max-width: 991.98px) {
+    .custom-navbar {
+        .navbar-collapse {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: $shadow-soft;
+            margin-top: 1rem;
+        }
+
+        .navbar-nav .nav-item {
+            margin-right: 0;
+            margin-bottom: 0.5rem;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-photo-container {
+        width: 120px;
+        height: 120px;
+    }
+
+    .custom-card .card-body {
+        padding: 1rem;
+    }
+
+    .btn-primary,
+    .btn-outline-danger,
+    .btn-outline-secondary {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.9rem;
+    }
+    
+    .table-responsive {
+        border-radius: 8px;
+        
+        .table {
+            font-size: 0.875rem;
+            
+            td, th {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+    }
+    
+    .card.text-center {
+        .card-body {
+            padding: 1.5rem;
+            
+            .col-form-label {
+                text-align: left;
+                margin-bottom: 0.5rem;
+            }
+        }
+        
+        .card-footer {
+            padding: 1rem 1.5rem;
+            
+            .btn-dark {
+                width: 100%;
+                margin-bottom: 0.5rem;
+                
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
     }
 }

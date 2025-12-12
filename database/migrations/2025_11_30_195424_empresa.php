@@ -10,14 +10,11 @@ return new class extends Migration
     {
         Schema::create('empresas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // ← AGREGAR ESTO
             $table->string('nombre');
             $table->string('direccion')->nullable();
             $table->string('telefono', 20)->nullable();
             $table->string('logo')->nullable();
             $table->timestamps();
-
-            $table->unique('user_id');
         });
     }
 

@@ -1,0 +1,392 @@
+// resources/scss/dashboardStyles.scss - ESTILOS PARA DASHBOARD
+
+// Variables principales
+$color-primary: #d82128;
+$color-primary-light: rgba(216, 33, 40, 0.1);
+$color-success: #10b981;
+$color-warning: #f59e0b;
+$color-info: #3b82f6;
+$color-dark: #1e1e1e;
+$color-light: #f8fafc;
+$color-border: #e2e8f0;
+$color-text-muted: #6b7280;
+$breakpoint-mobile: 768px;
+$breakpoint-tablet: 1024px;
+
+// ===== ESTILOS GENERALES =====
+.dashboard-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: $color-light;
+    min-height: 100vh;
+}
+
+// ===== TÍTULO DEL DASHBOARD =====
+.dashboard-header {
+    margin-bottom: 2rem;
+    
+    h2 {
+        font-weight: 700;
+        color: $color-dark;
+        font-size: 1.75rem;
+        display: flex;
+        align-items: center;
+        
+        i {
+            margin-right: 0.75rem;
+            color: $color-primary;
+        }
+    }
+    
+    p {
+        color: $color-text-muted;
+        font-size: 0.95rem;
+        margin-top: 0.5rem;
+    }
+}
+
+// ===== TARJETAS DE ESTADÍSTICAS =====
+.stats-card {
+    background: white;
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    height: 100%;
+    overflow: hidden;
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+}
+
+// Contenido de tarjetas
+.stats-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    @media (max-width: $breakpoint-mobile) {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+}
+
+.stats-text {
+    flex: 1;
+    
+    .stats-label {
+        color: $color-text-muted;
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+        display: block;
+    }
+    
+    .stats-value {
+        font-weight: 700;
+        font-size: 1.75rem;
+        color: $color-dark;
+        margin-bottom: 0.25rem;
+        line-height: 1.2;
+    }
+    
+    .stats-trend {
+        font-size: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        
+        &.positive {
+            color: $color-success;
+        }
+        
+        &.negative {
+            color: #dc2626;
+        }
+        
+        &.neutral {
+            color: $color-text-muted;
+        }
+    }
+}
+
+.stats-icon {
+    background: rgba($color-primary, 0.1);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    i {
+        font-size: 2rem;
+        color: $color-primary;
+    }
+    
+    // Colores específicos para cada tarjeta
+    &.clients-icon {
+        background: rgba($color-primary, 0.1);
+        
+        i {
+            color: $color-primary;
+        }
+    }
+    
+    &.sales-icon {
+        background: rgba($color-success, 0.1);
+        
+        i {
+            color: $color-success;
+        }
+    }
+    
+    &.products-icon {
+        background: rgba($color-warning, 0.1);
+        
+        i {
+            color: $color-warning;
+        }
+    }
+    
+    &.services-icon {
+        background: rgba($color-info, 0.1);
+        
+        i {
+            color: $color-info;
+        }
+    }
+}
+
+// ===== GRÁFICOS Y TARJETAS =====
+.chart-card {
+    background: white;
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    height: 100%;
+    overflow: hidden;
+    
+    .card-header {
+        background: white;
+        border-bottom: 1px solid $color-border;
+        padding: 1.25rem 1.5rem;
+        
+        h5 {
+            font-weight: 700;
+            color: $color-dark;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            
+            i {
+                margin-right: 0.5rem;
+            }
+            
+            &.sales-title i {
+                color: $color-primary;
+            }
+            
+            &.brands-title i {
+                color: $color-info;
+            }
+            
+            &.clients-title i {
+                color: $color-success;
+            }
+            
+            &.users-title i {
+                color: #8b5cf6;
+            }
+        }
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+        position: relative;
+    }
+}
+
+// Contenedor de gráficos
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+    
+    @media (max-width: $breakpoint-mobile) {
+        height: 250px;
+    }
+}
+
+// ===== DISTRIBUCIÓN DE USUARIOS =====
+.users-distribution {
+    .distribution-item {
+        text-align: center;
+        padding: 0 0.5rem;
+        
+        .distribution-value {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            
+            h3 {
+                font-weight: 700;
+                margin: 0;
+                line-height: 1;
+            }
+            
+            &.admins-value {
+                background: rgba($color-primary, 0.1);
+                
+                h3 {
+                    color: $color-primary;
+                }
+            }
+            
+            &.employees-value {
+                background: rgba($color-info, 0.1);
+                
+                h3 {
+                    color: $color-info;
+                }
+            }
+            
+            &.clients-value {
+                background: rgba($color-success, 0.1);
+                
+                h3 {
+                    color: $color-success;
+                }
+            }
+        }
+        
+        .distribution-label {
+            color: $color-text-muted;
+            font-size: 0.75rem;
+            margin: 0;
+        }
+    }
+    
+    hr {
+        border-color: $color-border;
+        opacity: 0.5;
+        margin: 1.5rem 0;
+    }
+}
+
+// ===== RESPONSIVE =====
+@media (max-width: $breakpoint-tablet) {
+    .stats-card .card-body {
+        padding: 1.25rem;
+    }
+    
+    .chart-card .card-body {
+        padding: 1.25rem;
+    }
+}
+
+@media (max-width: $breakpoint-mobile) {
+    .dashboard-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .stats-value {
+        font-size: 1.5rem;
+    }
+    
+    .stats-icon {
+        padding: 0.75rem;
+        
+        i {
+            font-size: 1.75rem;
+        }
+    }
+    
+    .chart-container {
+        height: 200px;
+    }
+}
+
+// ===== ANIMACIONES =====
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.stats-card, .chart-card {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+// Retraso para animaciones en cascada
+$card-count: 8;
+@for $i from 1 through $card-count {
+    .stats-card:nth-child(#{$i}), 
+    .chart-card:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.1}s;
+    }
+}
+
+// ===== ESTILOS ESPECÍFICOS PARA GRID =====
+.dashboard-grid {
+    display: grid;
+    gap: 1.5rem;
+    
+    @media (min-width: $breakpoint-mobile) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @media (min-width: $breakpoint-tablet) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+// ===== UTILIDADES =====
+.text-primary-custom {
+    color: $color-primary;
+}
+
+.bg-primary-light {
+    background-color: $color-primary-light;
+}
+
+.rounded-lg {
+    border-radius: 0.75rem;
+}
+
+.shadow-sm {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+// ===== SCROLLBAR PERSONALIZADO =====
+.dashboard-container {
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        background: $color-light;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background: $color-border;
+        border-radius: 4px;
+        
+        &:hover {
+            background: darken($color-border, 10%);
+        }
+    }
+}

@@ -1,4 +1,4 @@
-@extends('app')
+@extends('menu')
 @section('contenido')
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">

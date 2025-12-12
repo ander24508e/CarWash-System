@@ -10,13 +10,13 @@ class ServiciosController extends Controller
        public function index()
     {
         $servicios = servicios::orderBy('id', 'asc')->paginate(10);
-        return view("servicios.servicios", compact('servicios'));
+        return view("inventario.servicios.servicios", compact('servicios'));
     }
 
     public function create()
     {
         $servicios = servicios::all();
-        return view('servicios.serviciosCreate', compact('servicios'));
+        return view('inventario.servicios.serviciosCreate', compact('servicios'));
     }
 
     public function search(Request $request)
@@ -33,6 +33,6 @@ class ServiciosController extends Controller
 
         $servicios_buscar = $servicios_buscar->paginate(5);
 
-        return view('servicios.serviciosSearch', compact('servicios_buscar'));
+        return view('inventario.servicios.serviciosSearch', compact('servicios_buscar'));
     }
 }

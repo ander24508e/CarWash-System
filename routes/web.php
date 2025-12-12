@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\ClientesController;
-use App\Http\Controllers\EmpleadosController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\FacturasController;
 use App\Http\Controllers\MarcaVehiculoController;
@@ -17,110 +17,250 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| SISTEMA DE GESTIÓN CARWASH
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
+| Estructura de roles:
+| - admin: Acceso total al sistema (gestión completa)
+| - user (empleado): Ventas y operaciones diarias
+| - client: Vista de sus servicios y vehículos
+|--------------------------------------------------------------------------
 */
 
+// ============================================================================
+// RUTA PÚBLICA - LOGIN
+// ============================================================================
+// Redirecciona a la página de login cuando no hay sesión activa
 Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/menu', function () {
-    return view('menu');
-})->middleware(['auth', 'verified'])->name('menu');
-
+// ============================================================================
+// GRUPO: RUTAS AUTENTICADAS (Requiere login)
+// ============================================================================
 Route::middleware('auth')->group(function () {
 
+    // ========================================================================
+    // DASHBOARDS - Acceso según rol del usuario
+    // ========================================================================
+    // Ruta principal que redirecciona según el rol del usuario autenticado
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/menu', [DashboardController::class, 'index'])->name('menu');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Dashboard Admin (solo admin)
+    Route::get('/dashboard/admin', [DashboardController::class, 'admin'])
+        ->middleware('role:admin')
+        ->name('dashboard.admin');
 
-    Route::get('/empresa', [EmpresaController::class, 'edit'])->name('empresa.edit');
-    Route::patch('/empresa', [EmpresaController::class, 'update'])->name('empresa.update');
+    // Dashboard Empleado (admin y empleados)
+    Route::get('/dashboard/empleado', [DashboardController::class, 'empleado'])
+        ->middleware('role:admin|user')
+        ->name('dashboard.empleado');
 
-    Route::get('/productos', [ProductosController::class, 'index'])->name('productos.index');
-    Route::get('/agregar-productos', [ProductosController::class, 'create'])->name('productos.create');
-    Route::get('/editar-productos/{productos_edit}', [ProductosController::class, 'edit'])->name('productos.edit');
-    Route::get('/buscar-productos', [ProductosController::class, 'search'])->name('productos.buscar');
-    Route::post('/agregar-productos', [ProductosController::class, 'store'])->name('productos.store');
-    Route::put('/actualizar-productos/{productos_id}', [ProductosController::class, 'update'])->name('productos.update');
-    Route::delete('/eliminar-categorias/{productos_eliminar}', [ProductosController::class, 'destroyer'])->name('productos.delete');
+    // Dashboard Cliente (comentado - futuro)
+    // Route::get('/dashboard/cliente', [DashboardController::class, 'cliente'])
+    //     ->middleware('role:client')
+    //     ->name('dashboard.cliente');
 
-    Route::get('/ver-categorias', [CategoriasController::class, 'index'])->name('categorias.index');
-    Route::get('/crear-categorias', [CategoriasController::class, 'create'])->name('categorias.create');
-    Route::get('/editar-categorias/{categorias_edit}', [CategoriasController::class, 'edit'])->name('categorias.edit');
-    Route::get('/buscar-categorias', [CategoriasController::class, 'search'])->name('categorias.buscar');
-    Route::post('/agregar-categorias', [CategoriasController::class, 'store'])->name('categorias.store');
-    Route::put('/actualizar-categorias/{categorias_id}', [CategoriasController::class, 'update'])->name('categorias.update');
-    Route::delete('/eliminar-categorias/{categorias_eliminar}', [CategoriasController::class, 'destroyer'])->name('categorias.delete');
+    // Estadísticas en tiempo real (AJAX) - Solo Admin
+    Route::get('/dashboard/stats/realtime', [DashboardController::class, 'getRealtimeStats'])
+        ->middleware('role:admin')
+        ->name('dashboard.realtime');
 
+    // ========================================================================
+    // PERFIL DE USUARIO - Accesible para todos los usuarios autenticados
+    // ========================================================================
+    Route::prefix('profile')->name('profile.')->group(function () {
+        Route::get('/', [ProfileController::class, 'edit'])->name('edit');
+        Route::patch('/', [ProfileController::class, 'update'])->name('update');
+        Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
+    });
 
-    Route::get('/clientes', [ClientesController::class, 'index'])->name('clientes.index');
-    Route::get('/agregar-clientes', [ClientesController::class, 'create'])->name('clientes.create');
-    Route::get('/editar-clientes/{clientes_edit}', [ClientesController::class, 'edit'])->name('clientes.edit');
-    Route::get('/buscar-clientes', [ClientesController::class, 'search'])->name('clientes.buscar');
-    Route::post('/agregar-clientes', [ClientesController::class, 'store'])->name('clientes.store');
-    Route::put('/actualizar-clientes/{clientes_id}', [ClientesController::class, 'update'])->name('clientes.update');
-    Route::delete('/eliminar-clientes/{clientes_eliminar}', [ClientesController::class, 'destroyer'])->name('clientes.delete');
+    // ========================================================================
+    // GRUPO: RUTAS EXCLUSIVAS PARA ADMINISTRADORES
+    // ========================================================================
+    // Solo los usuarios con rol 'admin' pueden acceder a estas rutas
+    Route::middleware('role:admin')->group(function () {
 
+        // --------------------------------------------------------------------
+        // EMPRESA - Configuración general del negocio
+        // --------------------------------------------------------------------
+        // Gestiona: Nombre, dirección, teléfono, logo de la empresa
+        Route::prefix('empresa')->name('empresa.')->group(function () {
+            Route::get('/', [EmpresaController::class, 'edit'])->name('edit');
+            Route::patch('/', [EmpresaController::class, 'update'])->name('update');
+        });
 
-    Route::get('/vehiculos', [VehiculosController::class, 'index'])->name('vehiculos.index');
-    Route::get('/agregar-vehiculos', [VehiculosController::class, 'create'])->name('vehiculos.create');
-    Route::get('/editar-vehiculos/{vehiculos_edit}', [VehiculosController::class, 'edit'])->name('vehiculos.edit');
-    Route::get('/buscar-vehiculos', [VehiculosController::class, 'search'])->name('vehiculos.buscar');
-    Route::post('/agregar-vehiculos', [VehiculosController::class, 'store'])->name('vehiculos.store');
-    Route::put('/actualizar-vehiculos/{vehiculos_id}', [VehiculosController::class, 'update'])->name('vehiculos.update');
-    Route::delete('/eliminar-vehiculos/{vehiculos_eliminar}', [VehiculosController::class, 'destroyer'])->name('vehiculos.delete');
+        // --------------------------------------------------------------------
+        // USUARIOS - Gestión de cuentas del sistema
+        // --------------------------------------------------------------------
+        // Gestiona: Admins, Empleados, Clientes (CRUD completo)
+        Route::prefix('usuarios')->name('usuarios.')->group(function () {
+            Route::get('/', [UsuariosController::class, 'index'])->name('index');
+            Route::get('/agregar', [UsuariosController::class, 'create'])->name('create');
+            Route::post('/agregar', [UsuariosController::class, 'store'])->name('store');
+            Route::get('/editar/{usuario}', [UsuariosController::class, 'edit'])->name('edit');
+            Route::put('/actualizar/{usuario}', [UsuariosController::class, 'update'])->name('update');
+            Route::delete('/eliminar/{usuario}', [UsuariosController::class, 'destroy'])->name('delete');
+            Route::get('/buscar', [UsuariosController::class, 'search'])->name('buscar');
+        });
 
-    Route::get('/marcas-vehiculos', [MarcaVehiculoController::class, 'index'])->name('marcas.index');
-    Route::get('/agregar-marcas-vehiculos', [MarcaVehiculoController::class, 'create'])->name('marcas.create');
-    Route::get('/editar-marcas-vehiculos/{marcas_edit}', [MarcaVehiculoController::class, 'edit'])->name('marcas.edit');
-    Route::get('/buscar-marcas-vehiculos', [MarcaVehiculoController::class, 'search'])->name(name: 'marcas.buscar');
-    Route::post('/agregar-marcas-vehiculos', [MarcaVehiculoController::class, 'store'])->name('marcas.store');
-    Route::put('/actualizar-marcas-vehiculos/{marcas_id}', [MarcaVehiculoController::class, 'update'])->name('marcas.update');
-    Route::delete('/eliminar-marcas-vehiculos/{marcas_eliminar}', [MarcaVehiculoController::class, 'destroyer'])->name('marcas.delete');
+        // --------------------------------------------------------------------
+        // CLIENTES - Gestión de clientes del carwash
+        // --------------------------------------------------------------------
+        // Gestiona: Datos personales, historial de servicios
+        Route::prefix('clientes')->name('clientes.')->group(function () {
+            Route::get('/', [ClientesController::class, 'index'])->name('index');
+            Route::get('/agregar', [ClientesController::class, 'create'])->name('create');
+            Route::post('/agregar', [ClientesController::class, 'store'])->name('store');
+            Route::get('/editar/{cliente}', [ClientesController::class, 'edit'])->name('edit');
+            Route::put('/actualizar/{cliente}', [ClientesController::class, 'update'])->name('update');
+            Route::delete('/eliminar/{cliente}', [ClientesController::class, 'destroy'])->name('delete');
+            Route::get('/buscar', [ClientesController::class, 'search'])->name('buscar');
+        });
 
-    Route::get('/modelos-vehiculos', [ModelVehiculoController::class, 'index'])->name('modelos.index');
-    Route::get('/agregar-modelos-vehiculos', [ModelVehiculoController::class, 'create'])->name('modelos.create');
-    Route::get('/editar-modelos-vehiculos/{modelos_edit}', [ModelVehiculoController::class, 'edit'])->name('modelos.edit');
-    Route::get('/buscar-modelos-vehiculos', [ModelVehiculoController::class, 'search'])->name('modelos.buscar');
-    Route::post('/agregar-modelos-vehiculos', [ModelVehiculoController::class, 'store'])->name('modelos.store');
-    Route::put('/actualizar-modelos-vehiculos/{modelos_id}', [ModelVehiculoController::class, 'update'])->name('modelos.update');
-    Route::delete('/eliminar-modelos-vehiculos/{modelos_eliminar}', [ModelVehiculoController::class, 'destroyer'])->name('modelos.delete');
+        // --------------------------------------------------------------------
+        // VEHÍCULOS - Gestión de vehículos registrados
+        // --------------------------------------------------------------------
+        // Gestiona: Placas, marcas, modelos, colores de vehículos
+        Route::prefix('vehiculos')->name('vehiculos.')->group(function () {
+            Route::get('/', [VehiculosController::class, 'index'])->name('index');
+            Route::get('/agregar', [VehiculosController::class, 'create'])->name('create');
+            Route::post('/agregar', [VehiculosController::class, 'store'])->name('store');
+            Route::get('/editar/{vehiculo}', [VehiculosController::class, 'edit'])->name('edit');
+            Route::put('/actualizar/{vehiculo}', [VehiculosController::class, 'update'])->name('update');
+            Route::delete('/eliminar/{vehiculo}', [VehiculosController::class, 'destroy'])->name('delete');
+            Route::get('/buscar', [VehiculosController::class, 'search'])->name('buscar');
+        });
 
+        // --------------------------------------------------------------------
+        // MARCAS DE VEHÍCULOS - Catálogo de marcas
+        // --------------------------------------------------------------------
+        // Gestiona: Toyota, Chevrolet, Honda, etc.
+        Route::prefix('marcas-vehiculos')->name('marcas.')->group(function () {
+            Route::get('/', [MarcaVehiculoController::class, 'index'])->name('index');
+            Route::get('/agregar', [MarcaVehiculoController::class, 'create'])->name('create');
+            Route::post('/agregar', [MarcaVehiculoController::class, 'store'])->name('store');
+            Route::get('/editar/{marca}', [MarcaVehiculoController::class, 'edit'])->name('edit');
+            Route::put('/actualizar/{marca}', [MarcaVehiculoController::class, 'update'])->name('update');
+            Route::delete('/eliminar/{marca}', [MarcaVehiculoController::class, 'destroy'])->name('delete');
+            Route::get('/buscar', [MarcaVehiculoController::class, 'search'])->name('buscar');
+        });
 
-    Route::get('/servicios', [ServiciosController::class, 'index'])->name('servicios.index');
-    Route::get('/agregar-servicios', [ServiciosController::class, 'create'])->name('servicios.create');
-    Route::get('/editar-servicios/{servicios_edit}', [ServiciosController::class, 'edit'])->name('servicios.edit');
-    Route::get('/buscar-servicios', [ServiciosController::class, 'search'])->name('servicios.buscar');
-    Route::post('/agregar-servicios', [ServiciosController::class, 'store'])->name('servicios.store');
-    Route::put('/actualizar-servicios/{servicios_id}', [ServiciosController::class, 'update'])->name('servicios.update');
-    Route::delete('/eliminar-servicios/{servicios_eliminar}', [ServiciosController::class, 'destroyer'])->name('servicios.delete');
+        // --------------------------------------------------------------------
+        // MODELOS DE VEHÍCULOS - Catálogo de modelos
+        // --------------------------------------------------------------------
+        // Gestiona: Corolla, Aveo, Civic, etc. (relacionados con marcas)
+        Route::prefix('modelos-vehiculos')->name('modelos.')->group(function () {
+            Route::get('/', [ModelVehiculoController::class, 'index'])->name('index');
+            Route::get('/agregar', [ModelVehiculoController::class, 'create'])->name('create');
+            Route::post('/agregar', [ModelVehiculoController::class, 'store'])->name('store');
+            Route::get('/editar/{modelo}', [ModelVehiculoController::class, 'edit'])->name('edit');
+            Route::put('/actualizar/{modelo}', [ModelVehiculoController::class, 'update'])->name('update');
+            Route::delete('/eliminar/{modelo}', [ModelVehiculoController::class, 'destroy'])->name('delete');
+            Route::get('/buscar', [ModelVehiculoController::class, 'search'])->name('buscar');
+        });
 
+        // --------------------------------------------------------------------
+        // SERVICIOS - Catálogo de servicios ofrecidos
+        // --------------------------------------------------------------------
+        // Gestiona: Lavado Express, Completo, Cambio de Aceite, etc.
+        Route::prefix('servicios')->name('servicios.')->group(function () {
+            Route::get('/', [ServiciosController::class, 'index'])->name('index');
+            Route::get('/agregar', [ServiciosController::class, 'create'])->name('create');
+            Route::post('/agregar', [ServiciosController::class, 'store'])->name('store');
+            Route::get('/editar/{servicio}', [ServiciosController::class, 'edit'])->name('edit');
+            Route::put('/actualizar/{servicio}', [ServiciosController::class, 'update'])->name('update');
+            Route::delete('/eliminar/{servicio}', [ServiciosController::class, 'destroy'])->name('delete');
+            Route::get('/buscar', [ServiciosController::class, 'search'])->name('buscar');
+        });
 
-    Route::get('/ventas', [VentasController::class, 'index'])->name('ventas.index');
-    Route::get('/agregar-ventas', [VentasController::class, 'create'])->name('ventas.create');
-    Route::get('/editar-ventas/{ventas_edit}', [ServiciosController::class, 'edit'])->name('ventas.edit');
-    Route::get('/buscar-ventas', [ServiciosController::class, 'search'])->name('ventas.buscar');
-    Route::post('/agregar-ventas', [ServiciosController::class, 'store'])->name('ventas.store');
-    Route::put('/actualizar-ventas/{ventas_id}', [ServiciosController::class, 'update'])->name('ventas.update');
-    Route::delete('/eliminar-ventas/{ventas}', [ServiciosController::class, 'destroyer'])->name('ventas.delete');
+        // --------------------------------------------------------------------
+        // PRODUCTOS - Inventario de productos químicos y accesorios
+        // --------------------------------------------------------------------
+        // Gestiona: Shampoo, cera, limpiadores, control de stock
+        Route::prefix('productos')->name('productos.')->group(function () {
+            Route::get('/', [ProductosController::class, 'index'])->name('index');
+            Route::get('/agregar', [ProductosController::class, 'create'])->name('create');
+            Route::post('/agregar', [ProductosController::class, 'store'])->name('store');
+            Route::get('/editar/{producto}', [ProductosController::class, 'edit'])->name('edit');
+            Route::put('/actualizar/{producto}', [ProductosController::class, 'update'])->name('update');
+            Route::delete('/eliminar/{producto}', [ProductosController::class, 'destroy'])->name('delete');
+            Route::get('/buscar', [ProductosController::class, 'search'])->name('buscar');
+        });
 
+        // --------------------------------------------------------------------
+        // CATEGORÍAS - Clasificación de productos
+        // --------------------------------------------------------------------
+        // Gestiona: Limpieza, Encerado, Protección, etc.
+        Route::prefix('categorias')->name('categorias.')->group(function () {
+            Route::get('/', [CategoriasController::class, 'index'])->name('index');
+            Route::get('/crear', [CategoriasController::class, 'create'])->name('create');
+            Route::post('/agregar', [CategoriasController::class, 'store'])->name('store');
+            Route::get('/editar/{categorias_edit}', [CategoriasController::class, 'edit'])->name('edit');
+            Route::put('/actualizar/{categoria}', [CategoriasController::class, 'update'])->name('update');
+            Route::delete('/eliminar/{categoria}', [CategoriasController::class, 'destroy'])->name('delete');
+            Route::get('/buscar', [CategoriasController::class, 'search'])->name('buscar');
+        });
 
-    Route::get('/facturas', [FacturasController::class, 'index'])->name('facturas.index');
-    Route::get('/agregar-facturas', [FacturasController::class, 'create'])->name('facturas.create');
+        // --------------------------------------------------------------------
+        // FACTURAS - Gestión de facturación
+        // --------------------------------------------------------------------
+        // Gestiona: Emisión y registro de facturas
+        Route::prefix('facturas')->name('facturas.')->group(function () {
+            Route::get('/', [FacturasController::class, 'index'])->name('index');
+            Route::get('/agregar', [FacturasController::class, 'create'])->name('create');
+        });
+    });
 
-    Route::get('/usuarios', [UsuariosController::class, 'index'])->name('usuarios.index');
-    Route::get('/agregar-usuarios', [UsuariosController::class, 'create'])->name('usuarios.create');
+    // ========================================================================
+    // GRUPO: RUTAS PARA ADMINISTRADORES Y EMPLEADOS
+    // ========================================================================
+    // Accesible por roles: 'admin' y 'user' (empleados)
+    Route::middleware('role:admin|user')->group(function () {
 
-    Route::get('/empleados', [EmpleadosController::class, 'index'])->name('empleados.index');
-    Route::get('/agregar-empleados', [EmpleadosController::class, 'create'])->name('empleados.create');
+        // --------------------------------------------------------------------
+        // VENTAS - Registro de servicios realizados
+        // --------------------------------------------------------------------
+        // Gestiona: Servicios vendidos, cliente, vehículo, empleado, totales
+        // Admin: Ve todas las ventas
+        // Empleado: Ve solo sus ventas
+        Route::prefix('ventas')->name('ventas.')->group(function () {
+            Route::get('/', [VentasController::class, 'index'])->name('index');
+            Route::get('/agregar', [VentasController::class, 'create'])->name('create');
+            Route::post('/agregar', [VentasController::class, 'store'])->name('store');
+            Route::get('/editar/{venta}', [VentasController::class, 'edit'])->name('edit');
+            Route::put('/actualizar/{venta}', [VentasController::class, 'update'])->name('update');
+            Route::delete('/eliminar/{venta}', [VentasController::class, 'destroy'])->name('delete');
+            Route::get('/buscar', [VentasController::class, 'search'])->name('buscar');
+        });
+    });
+
+    // ========================================================================
+    // GRUPO: RUTAS PARA CLIENTES (Futuro)
+    // ========================================================================
+    // Accesible solo por usuarios con rol 'client'
+    // NOTA: Descomentar cuando estén listos los métodos en los controladores
+    /*
+    Route::middleware('role:client')->prefix('cliente')->name('cliente.')->group(function () {
+
+        // Vista de datos personales
+        Route::get('/perfil', [ProfileController::class, 'show'])->name('perfil');
+
+        // Mis vehículos registrados
+        Route::get('/mis-vehiculos', [VehiculosController::class, 'misVehiculos'])->name('mis-vehiculos');
+
+        // Historial de servicios recibidos
+        Route::get('/mis-servicios', [VentasController::class, 'misServicios'])->name('mis-servicios');
+
+        // Agendar nuevo servicio (opcional)
+        Route::get('/agendar', [VentasController::class, 'agendar'])->name('agendar');
+        Route::post('/agendar', [VentasController::class, 'guardarCita'])->name('guardar-cita');
+    });
+    */
 });
 
+// ============================================================================
+// RUTAS DE AUTENTICACIÓN (Login, Registro, Recuperación de contraseña)
+// ============================================================================
+// Generadas automáticamente por Laravel Breeze/Jetstream
 require __DIR__ . '/auth.php';

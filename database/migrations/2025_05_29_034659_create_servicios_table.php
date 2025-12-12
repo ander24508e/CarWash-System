@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name_service');
             $table->string('kind_service');
-            $table->string('price_premium');
-            $table->string('price_basic');
-            $table->foreignId('vehiculo_id')->constrained('vehiculos')->onDelete('cascade');
+            $table->string('time_service');
+            $table->text('description_service')->nullable();
+            $table->string('precio_service');
+            $table->string('foto_service')->nullable();
+            $table->boolean('activo')->default(true);
             $table->timestamps();
         });
     }

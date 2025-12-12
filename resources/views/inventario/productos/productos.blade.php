@@ -23,7 +23,7 @@
         <!-- Tabla de productos -->
         <div class="card shadow">
             <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">PRODUCTOS</h5>
+                <h5 class="mb-0 text-center">PRODUCTOS</h5>
             </div>
             <div class="card-body p-0">
                 <table id="productos-table" class="table table-striped table-bordered">

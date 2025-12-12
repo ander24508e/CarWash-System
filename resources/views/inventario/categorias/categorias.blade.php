@@ -13,13 +13,19 @@
         <button class="btn btn-outline-success buscar" type="submit">Buscar</button>
     </form>
 
-    {{-- Crear  --}}
     <a href="{{ route('categorias.create') }}" class="btn btn-primary agregar">
         <i class="bi bi-plus-lg"></i>
     </a>
 
+    {{-- Mensajes de éxito --}}
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show mx-4 mt-3" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
+
     <div class="container py-4">
-        <!-- Tabla de categorías -->
         <div class="card shadow">
             <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">CATEGORÍAS</h5>
@@ -40,14 +46,16 @@
                                 <td>{{ $categoria->id }}</td>
                                 <td>{{ $categoria->name_category }}</td>
                                 <td>
-                                    <a href="{{ route('categorias.edit', ['categorias_edit' => $categoria->id]) }}"
+                                    {{-- ✅ CORREGIDO --}}
+                                    <a href="{{ route('categorias.edit', $categoria->id) }}"
                                         class="btn btn-sm btn-outline-primary rounded-circle">
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                 </td>
                                 <td>
-                                    <form method="POST"
-                                        action="{{ route('categorias.delete', ['categorias_eliminar' => $categoria->id]) }}">
+                                    {{-- ✅ CORREGIDO --}}
+                                    <form method="POST" action="{{ route('categorias.delete', $categoria->id) }}"
+                                          onsubmit="return confirm('¿Estás seguro de eliminar esta categoría?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle">
@@ -63,14 +71,9 @@
                 <div class="d-flex justify-content-center mt-3">
                     {{ $categorias->links('pagination::bootstrap-4') }}
                 </div>
-
-                {{-- <div class="d-flex justify-content-center mt-4 px-4">
-                    {{ $categorias->links() }}
-                </div> --}}
-                
             </div>
         </div>
-        <!-- Botón volver -->
+
         <div class="text-center mt-4">
             <a href="{{ route('menu') }}" class="btn btn-outline-secondary">
                 <i class="bi bi-arrow-left me-2"></i>Volver al menú
