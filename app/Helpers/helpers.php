@@ -31,6 +31,6 @@ if (!function_exists('empresa_nombre')) {
     function empresa_nombre()
     {
         $empresa = Empresa::first();
-        return $empresa ? $empresa->nombre : 'CarWash System';
+        return $empresa ? $empresa->nombre : 'Nombre Empresa';
     }
 }
