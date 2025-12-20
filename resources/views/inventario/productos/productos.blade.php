@@ -56,14 +56,14 @@
                                 <td>{{ $producto->precio_venta }}</td>
 
                                 <td>
-                                    <a href="{{ route('productos.edit', ['productos_edit' => $producto->id]) }}"
+                                    <a href="{{ route('productos.edit', $producto->id) }}"
                                         class="btn btn-sm btn-outline-primary rounded-circle">
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                 </td>
                                 <td>
                                     <form method="POST"
-                                        action="{{ route('productos.delete', ['productos_eliminar' => $producto->id]) }}">
+                                        action="{{ route('productos.delete', $producto->id) }}">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle">

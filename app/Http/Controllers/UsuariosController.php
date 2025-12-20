@@ -11,16 +11,31 @@ class UsuariosController extends Controller
 {
     public function __construct()
     {
-        // Solo admin puede gestionar usuarios
         $this->middleware(['auth', 'role:admin']);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        // Obtener todos los usuarios con sus roles
-        $usuarios = User::with('roles')->paginate(10);
+        // Iniciar query
+        $query = User::with('roles');
+
+        // ✅ FILTRO POR ROL (NUEVO)
+        if ($request->filled('rol') && $request->rol !== 'todos') {
+            $query->role($request->rol);
+        }
+
+        // ✅ BÚSQUEDA (NUEVO)
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('email', 'LIKE', '%' . $request->search . '%');
+            });
+        }
+
+        $usuarios = $query->paginate(10)->appends($request->query());
+        $roles = Role::all(); // ✅ PASAR ROLES A LA VISTA
         
-        return view('administracion.usuarios.usuarios', compact('usuarios'));
+        return view('administracion.usuarios.usuarios', compact('usuarios', 'roles'));
     }
 
     public function create()
@@ -38,14 +53,12 @@ class UsuariosController extends Controller
             'rol' => 'required|exists:roles,name'
         ]);
 
-        // Crear usuario
         $usuario = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
-        // Asignar rol
         $usuario->assignRole($request->rol);
 
         return redirect()->route('usuarios.index')
@@ -66,8 +79,9 @@ class UsuariosController extends Controller
         }
 
         $usuarios_buscar = $usuarios_buscar->paginate(10);
+        $roles = Role::all(); // ✅ AGREGAR ESTO
 
-        return view('administracion.usuarios.usuariosSearch', compact('usuarios_buscar'));
+        return view('administracion.usuarios.usuariosSearch', compact('usuarios_buscar', 'roles'));
     }
 
     public function edit($id)
@@ -88,19 +102,14 @@ class UsuariosController extends Controller
         ]);
 
         $usuario = User::findOrFail($id);
-        
-        // Actualizar datos básicos
         $usuario->name = $request->name;
         $usuario->email = $request->email;
         
-        // Actualizar contraseña si se proporciona
         if ($request->filled('password')) {
             $usuario->password = Hash::make($request->password);
         }
         
         $usuario->save();
-        
-        // Sincronizar roles (eliminar todos y asignar el nuevo)
         $usuario->syncRoles([$request->rol]);
 
         return redirect()->route('usuarios.index')
@@ -109,7 +118,6 @@ class UsuariosController extends Controller
 
     public function destroy($id)
     {
-        // No permitir eliminar al propio usuario admin
         if (auth()->id() == $id) {
             return redirect()->route('usuarios.index')
                 ->with('error', 'No puedes eliminar tu propia cuenta.');

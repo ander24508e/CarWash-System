@@ -10,7 +10,7 @@
                 <h1>EDITAR MODELO</h1>
             </div>
             <div class="card-body">
-                <form method="post" action="{{ route('modelos.update', ['modelos_id' => $modelos->id]) }}">
+                <form method="post" action="{{ route('modelos.update', $modelos->id) }}">
                     @csrf
                     @method('PUT')
 

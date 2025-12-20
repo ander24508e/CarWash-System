@@ -43,14 +43,14 @@
                                         style="max-height: 150px; display: none;">
                                 </td>
                                 <td>
-                                    <a href="{{ route('marcas.edit', ['marcas_edit' => $marca->id]) }}"
+                                    <a href="{{ route('marcas.edit', $marca->id) }}"
                                         class="btn btn-sm btn-outline-primary rounded-circle">
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                 </td>
                                 <td>
                                     <form method="POST"
-                                        action="{{ route('marcas.delete', ['marcas_eliminar' => $marca->id]) }}">
+                                        action="{{ route('marcas.delete',  $marca->id) }}">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle">

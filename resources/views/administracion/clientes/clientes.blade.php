@@ -48,14 +48,14 @@
                                 <td>{{ $cliente->email }}</td>
                                 <td>{{ $cliente->phone }}</td>
                                 <td>
-                                    <a href="{{ route('clientes.edit', ['clientes_edit' => $cliente->id]) }}"
+                                    <a href="{{ route('clientes.edit',   $cliente->id) }}"
                                         class="btn btn-sm btn-outline-primary rounded-circle">
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                 </td>
                                 <td>
                                     <form method="POST"
-                                        action="{{ route('clientes.delete', ['clientes_eliminar' => $cliente->id]) }}">
+                                        action="{{ route('clientes.delete', $cliente->id) }}">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle">

@@ -42,14 +42,14 @@
                         <td>{{ $modelo->name_model }}</td>
                         <td>{{ $modelo->MarcaVehiculo->name_brand ?? 'No existe la marca' }}</td>
                         <td>
-                            <a href="{{ route('modelos.edit', ['modelos_edit' => $modelo->id]) }}"
+                            <a href="{{ route('modelos.edit', $modelo->id) }}"
                                 class="btn btn-sm btn-outline-primary rounded-circle">
                                 <i class="bi bi-pencil"></i>
                             </a>
                         </td>
                         <td>
                             <form method="POST"
-                                action="{{ route('modelos.delete', ['modelos_eliminar' => $modelo->id]) }}">
+                                action="{{ route('modelos.delete',  $modelo->id) }}">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle">

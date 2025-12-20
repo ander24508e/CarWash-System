@@ -6,11 +6,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
-    {{-- Barra de búsqueda --}}
-    <form class="d-flex buscar" action="{{ route('usuarios.buscar') }}" method="GET">
-        @csrf
-        <input class="form-control me-2" type="search" placeholder="Buscar Usuarios" name="searchTerm"
-            value="{{ request()->searchTerm }}">
+    {{-- ✅ Barra de búsqueda CON FILTRO --}}
+    <form class="d-flex buscar" action="{{ route('usuarios.index') }}" method="GET">
+        <input class="form-control me-2" type="search" placeholder="Buscar Usuarios" name="search"
+            value="{{ request('search') }}" style="max-width: 300px;">
+        
+        {{-- ✅ FILTRO DE ROLES (NUEVO) --}}
+        <select class="form-select me-2" name="rol" style="max-width: 150px;">
+            <option value="todos" {{ request('rol') == 'todos' || !request('rol') ? 'selected' : '' }}>
+                Todos
+            </option>
+            @foreach($roles as $role)
+                <option value="{{ $role->name }}" {{ request('rol') == $role->name ? 'selected' : '' }}>
+                    {{ ucfirst($role->name) }}
+                </option>
+            @endforeach
+        </select>
+        
         <button class="btn btn-outline-success buscar" type="submit">Buscar</button>
     </form>
 
@@ -39,6 +51,10 @@
         <div class="card shadow">
             <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">USUARIOS</h5>
+                {{-- ✅ Mostrar filtro activo (NUEVO) --}}
+                @if(request('rol') && request('rol') != 'todos')
+                <span class="badge bg-primary">Filtrado: {{ ucfirst(request('rol')) }}</span>
+                @endif
             </div>
             <div class="card-body p-0">
                 <table id="usuarios-table" class="table table-striped table-bordered">
@@ -54,7 +70,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($usuarios as $usuario)
+                        @forelse ($usuarios as $usuario)
                             <tr>
                                 <td>{{ $usuario->id }}</td>
                                 <td>{{ $usuario->name }}</td>
@@ -88,7 +104,18 @@
                                     </form>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="7" class="text-center py-4">
+                                    <p class="text-muted">No se encontraron usuarios.</p>
+                                    @if(request('search') || request('rol'))
+                                    <a href="{{ route('usuarios.index') }}" class="btn btn-sm btn-primary">
+                                        Ver todos
+                                    </a>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
 
