@@ -20,7 +20,7 @@ if (!function_exists('empresa_logo')) {
     function empresa_logo()
     {
         $empresa = Empresa::first();
-        return $empresa ? $empresa->logo_url : asset('Images/lavadora-logo.jpg');
+        return $empresa ? $empresa->logo_url : asset('Images/empresa-logo.jpg');
     }
 }
 

@@ -19,12 +19,6 @@ class EmpresaController extends Controller
         // Obtener LA empresa del sistema (solo una)
         $empresa = Empresa::firstOrCreate(
             ['id' => 1],
-            [
-                'nombre' => 'CarWash System',
-                'direccion' => 'Dirección no configurada',
-                'telefono' => '0999999999',
-                'logo' => null
-            ]
         );
         
         return view('profile.empresa.empresaEdit', compact('empresa'));
