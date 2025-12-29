@@ -22,7 +22,6 @@
                         <h5 class="mb-0 brand-title">
                             {{ empresa_nombre() }}
                         </h5>
-                        <small class="brand-subtitle">desde 1978</small>
                     </div>
                 </a>
             @endauth

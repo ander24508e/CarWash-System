@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - Lavadora Endara</title>
+    {{-- ✅ CAMBIO: Usar helper empresa_nombre() en el título --}}
+    <title>Registro - {{ empresa_nombre() }}</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </head>
@@ -16,7 +17,8 @@
 
         <!-- Logo -->
         <div class="text-center mb-3">
-            <img src="{{ asset('images/lavadora-logo.jpg') }}" alt="logo-endara"
+            {{-- ✅ CAMBIO: Usar helper empresa_logo() para el logo --}}
+            <img src="{{ empresa_logo() }}" alt="{{ empresa_nombre() }}"
                 class="w-20 h-20 mx-auto object-contain rounded-full shadow-md">
             <h1 class="text-base font-bold text-gray-700 mt-1">Registro de Usuario</h1>
         </div>
@@ -28,12 +30,23 @@
             <!-- Nombre -->
             <div>
                 <label for="name" class="block text-xs font-semibold text-gray-700 mb-1">
-                    Nombre Completo
+                    Nombre
                 </label>
                 <input id="name" type="text" name="name"
                     class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg" value="{{ old('name') }}"
                     required autofocus autocomplete="name">
                 <x-input-error :messages="$errors->get('name')" class="text-red-500 text-xs mt-1" />
+            </div>
+
+            <!-- Apellido -->
+            <div>
+                <label for="apellido" class="block text-xs font-semibold text-gray-700 mb-1">
+                    Apellido
+                </label>
+                <input id="apellido" type="text" name="apellido"
+                    class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg" value="{{ old('apellido') }}"
+                    required autocomplete="apellido">
+                <x-input-error :messages="$errors->get('apellido')" class="text-red-500 text-xs mt-1" />
             </div>
 
             <!-- Email -->
@@ -65,7 +78,6 @@
                 <x-input-error :messages="$errors->get('password')" class="text-red-500 text-xs mt-1" />
             </div>
 
-
             <!-- Confirm Password -->
             <div>
                 <label for="password_confirmation" class="block text-xs font-semibold text-gray-700 mb-1">
@@ -84,17 +96,18 @@
                 <x-input-error :messages="$errors->get('password_confirmation')" class="text-red-500 text-xs mt-1" />
             </div>
 
-
             <!-- Botones -->
             <button type="submit"
                 class="w-full py-2 bg-red-600 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-red-700 transition">
                 Registrarse
             </button>
 
-            <p class="text-center text-xs text-gray-600">
-                ¿Ya tienes una cuenta?
-                <a href="{{ route('login') }}" class="text-red-600 font-semibold">Inicia sesión aquí</a>
-            </p>
+            @if (Route::has('login'))
+                <p class="text-center text-xs text-gray-600">
+                    ¿Ya tienes una cuenta?
+                    <a href="{{ route('login') }}" class="text-red-600 font-semibold">Inicia sesión aquí</a>
+                </p>
+            @endif
 
         </form>
     </div>
@@ -116,8 +129,5 @@
         }
     }
 </script>
-
-
-
 
 </html>
